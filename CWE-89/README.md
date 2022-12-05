@@ -6,7 +6,7 @@ Let’s use this [APK](https://github.com/satishpatnayak/AndroGoat) and the abov
 
 First, we design a detection rule executeSQLCommand.json to spot on behavior using SQL command Execution. Then, we use API isArgFromMethod to check if append use the value of getText as the argument. If yes, we confirmed that the SQL command string is built from user input, which will cause CWE-89 vulnerability.
 ## Quark Script CWE-89.py
-```
+```python
 from quark.script import runQuarkAnalysis, Rule
 
 SAMPLE_PATH = "AndroGoat.apk"
@@ -29,7 +29,7 @@ for sqlCommandExecution in quarkResult.behaviorOccurList:
 ```
 
 ## Quark Rule: executeSQLCommand.json
-```
+```json
 {
     "crime": "Execute SQL Command",
     "permission": [],

@@ -7,7 +7,7 @@ Let’s use this [APK](https://github.com/oversecured/ovaa) and the above APIs t
 We first design a detection rule setRetrofitBaseUrl.json to spot on behavior that sets the base URL of the Retrofit instance. Then, we loop through a custom list of cleartext protocol schemes and use API behaviorInstance.hasString to filter arguments that are URL strings with cleartext protocol.
 
 ## Quark Script CWE-319.py
-```
+```python
 from quark.script import runQuarkAnalysis, Rule
 
 SAMPLE_PATH = "./ovaa.apk"
@@ -37,7 +37,7 @@ for setRetrofitBaseUrl in quarkResult.behaviorOccurList:
 
 ## Quark Rule: setRetrofitBaseUrl.json
 
-```
+```json
 {
     "crime": "Set Retrofit Base Url",
     "permission": [],

@@ -6,7 +6,7 @@ Let’s use this [APK](https://github.com/rewanthtammana/Damn-Vulnerable-Bank) a
 
 First, we use Quark API getActivities to get all activity data in the manifest. Then we use activityInstance.hasIntentFilter to check if the activities have intent-filter. Also, we use activityInstance.isExported to check if the activities set the attribute android:exported=true. If both are true, then the APK exports the component for use by other applications. That may cause CWE-926 vulnerabilities.
 ## Quark Script CWE-926.py
-```
+```python
 from quark.script import *
 
 SAMPLE_PATH = "dvba.apk"

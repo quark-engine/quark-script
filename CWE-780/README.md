@@ -6,7 +6,7 @@ Let’s use this [APK](https://github.com/OWASP/MASTG-Hacking-Playground) and th
 
 We first design a detection rule useOfCryptographicAlgo.json to spot on behavior using the cryptographic algorithm. Then, we use API behaviorInstance.hasString(pattern, isRegex) to filter behaviors using the RSA algorithm. Finally, we use the same API to check if the algorithm runs without the OAEP scheme. If the answer is YES, the plaintext is predictable.
 ## Quark Script CWE-780.py
-```
+```python
 from quark.script import Rule, runQuarkAnalysis
 
 SAMPLE_PATH = "MSTG-Android-Java.apk"
@@ -25,7 +25,7 @@ for useCryptographicAlgo in quarkResult.behaviorOccurList:
 ```
 
 ## Quark Rule: useOfCryptographicAlgo.json
-```
+```json
 {
     "crime": "Use of cryptographic algorithm",
     "permission": [],

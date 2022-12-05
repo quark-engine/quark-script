@@ -7,7 +7,7 @@ Let’s use this [APK](https://github.com/oversecured/ovaa) and the above APIs t
 First, we design a detection rule checkFileExistence.json to spot on behavior that checks if a file exist on given storage mechanism. Then, we use API getParamValues() to get the file path. Finally, CWE-921 is found if the file path contains keyword sdcard.
 
 ## Quark Script CWE-921.py
-```
+```python
 from quark.script import runQuarkAnalysis, Rule
 
 SAMPLE_PATH = "ovaa.apk"
@@ -24,7 +24,7 @@ for existingFile in quarkResult.behaviorOccurList:
 ```
 
 ## Quark Rule: checkFileExistence.json
-```
+```json
 {
     "crime": "Check file existence",
     "permission": [],

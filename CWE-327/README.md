@@ -7,7 +7,7 @@ Let’s use this [APK](https://github.com/B3nac/InjuredAndroid) and the above AP
 We first design a detection rule useOfCryptographicAlgo.json to spot on behavior using cryptographic algorithms. Then, we use API behaviorInstance.hasString(pattern, isRegex) with a list to check if the algorithm is risky. If YES, that may cause the exposure of sensitive data.
 
 ## Quark Script CWE-327.py
-```
+```python
 from quark.script import runQuarkAnalysis, Rule
 
 SAMPLE_PATH = "InjuredAndroid.apk"
@@ -28,7 +28,7 @@ for useCryptoAlgo in quarkResult.behaviorOccurList:
 ```
 
 ## Quark Rule: useOfCryptographicAlgo.json
-```
+```json
 {
     "crime": "Use of cryptographic algorithm",
     "permission": [],

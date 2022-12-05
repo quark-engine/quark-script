@@ -8,7 +8,7 @@ First, we use API findMethodInAPK to locate log.d method. Then we use API method
 
 You can use your own keywords in the keywords list to detect sensitive data.
 ## Quark Script CWE-532.py
-```
+```python
 from quark.script import findMethodInAPK
 
 SAMPLE_PATH = "dvba.apk"

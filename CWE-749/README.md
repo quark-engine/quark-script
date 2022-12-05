@@ -6,7 +6,7 @@ Let’s use this [APK](https://github.com/OWASP/MASTG-Hacking-Playground) and th
 
 First, we design a detection rule configureJsExecution.json to spot on behavior using method setJavascriptEnabled. Then, we use API methodInstance.getArguments to check if it enables JavaScript execution on websites. Finally, we look for calls to method addJavaScriptInterface in the caller method. If yes, the APK exposes methods or functions to websites. That causes CWE-749 vulnerability.
 ## Quark Script CWE-749.py
-```
+```python
 from quark.script import runQuarkAnalysis, Rule
 
 SAMPLE_PATH = "MSTG-Android-Java.apk"
@@ -33,7 +33,7 @@ for configureJsExecution in quarkResult.behaviorOccurList:
         print(f"CWE-749 is detected in method, {caller.fullName}"
 ```
 ## Quark Rule: configureJsExecution.json
-```
+```json
 {
     "crime": "Configure JavaScript execution on websites",
     "permission": [],

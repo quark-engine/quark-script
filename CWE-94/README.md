@@ -7,7 +7,7 @@ Let’s use this [APK](https://github.com/oversecured/ovaa) and the above APIs t
 First, we design a detection rule loadExternalCode.json to spot on behavior uses method createPackageContext. Then, we find the caller method who calls the createPackageContext. Finally, we check if method checkSignatures is called in the caller method for verification.
 
 ## Quark Scipt: CWE-94.py
-```
+```python
 from quark.script import runQuarkAnalysis, Rule
 
 SAMPLE_PATH = "ovaa.apk"
@@ -36,7 +36,7 @@ for ldExternalCode in quarkResult.behaviorOccurList:
 ```
 
 ## Quark Rule: loadExternalCode.json
-```
+```json
 {
     "crime": "Load external code from other APK.",
     "permission": [],
