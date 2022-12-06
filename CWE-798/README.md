@@ -4,7 +4,7 @@ This scenario seeks to find hard-coded credentials in the APK file. See [CWE-798
 
 Let’s use this [APK](https://github.com/oversecured/ovaa) and the above APIs to show how Quark script find this vulnerability.
 
-First, we design a detection rule `findSecretKeySpec.json` to spot on behavior uses method SecretKeySpec. Then, we get all the parameter values that input to this method. From the returned parameter values, we identify it’s a AES key and parse the key out of the values. Finally, we dump all strings in the APK file and check if the AES key is in the strings. If the answer is YES, BINGO!!! We find hard-coded credentials in the APK file.
+First, we design a detection rule `findSecretKeySpec.json` to spot on behavior uses method `SecretKeySpec`. Then, we get all the parameter values that input to this method. From the returned parameter values, we identify it’s a AES key and parse the key out of the values. Finally, we dump all strings in the APK file and check if the AES key is in the strings. If the answer is YES, BINGO!!! We find hard-coded credentials in the APK file.
 ## Quark Scipt: CWE-798.py
 ```python
 import re

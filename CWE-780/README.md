@@ -4,7 +4,7 @@ This scenario seeks to find **the use of the RSA algorithm without Optimal Asymm
 
 Let’s use this [APK](https://github.com/OWASP/MASTG-Hacking-Playground) and the above APIs to show how the Quark script find this vulnerability.
 
-We first design a detection rule `useOfCryptographicAlgo.json` to spot on behavior using the cryptographic algorithm. Then, we use API *behaviorInstance.hasString(pattern, isRegex)* to filter behaviors using the RSA algorithm. Finally, we use the same API to check if the algorithm runs without the OAEP scheme. If the answer is YES, the plaintext is predictable.
+We first design a detection rule `useOfCryptographicAlgo.json` to spot on behavior using the cryptographic algorithm. Then, we use API `behaviorInstance.hasString(pattern, isRegex)` to filter behaviors using the RSA algorithm. Finally, we use the same API to check if the algorithm runs without the OAEP scheme. If the answer is YES, the plaintext is predictable.
 ## Quark Script CWE-780.py
 ```python
 from quark.script import Rule, runQuarkAnalysis

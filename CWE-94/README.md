@@ -4,7 +4,7 @@ This scenario seeks to find code injection in the APK file. See [CWE-94](https:/
 
 Let’s use this [APK](https://github.com/oversecured/ovaa) and the above APIs to show how the Quark script finds this vulnerability.
 
-First, we design a detection rule `loadExternalCode.json` to spot on behavior using the method createPackageContext. Then, we find the caller method that calls the createPackageContext. Finally, we check if the method checks signatures are called in the caller method for verification.
+First, we design a detection rule `loadExternalCode.json` to spot on behavior using the method `createPackageContext`. Then, we find the caller method that calls the `createPackageContext`. Finally, we check if the method `checkSignatures` is called in the caller method for verification.
 
 ## Quark Script: CWE-94.py
 ```python
