@@ -1,10 +1,10 @@
 # Detect CWE-327 in Android Application (InjuredAndroid.apk)
 
-This scenario seeks to find the use of a Broken or Risky Cryptographic Algorithm. See [CWE-327](https://cwe.mitre.org/data/definitions/327.html) for more details.
+This scenario seeks to find **the use of a Broken or Risky Cryptographic Algorithm**. See [CWE-327](https://cwe.mitre.org/data/definitions/327.html) for more details.
 
 Let’s use this [APK](https://github.com/B3nac/InjuredAndroid) and the above APIs to show how the Quark script finds this vulnerability.
 
-We first design a detection rule useOfCryptographicAlgo.json to spot on behavior using cryptographic algorithms. Then, we use API behaviorInstance.hasString(pattern, isRegex) with a list to check if the algorithm is risky. If YES, that may cause the exposure of sensitive data.
+We first design a detection rule `useOfCryptographicAlgo.json` to spot on behavior using cryptographic algorithms. Then, we use API `behaviorInstance.hasString(pattern, isRegex)` with a list to check if the algorithm is risky. If YES, that may cause the exposure of sensitive data.
 
 ## Quark Script CWE-327.py
 ```python

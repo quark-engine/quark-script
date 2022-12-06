@@ -4,7 +4,7 @@ This scenario seeks to find unsecure storage mechanism of data in the APK file. 
 
 Let’s use this [APK](https://github.com/oversecured/ovaa) and the above APIs to show how Quark script find this vulnerability.
 
-First, we design a detection rule checkFileExistence.json to spot on behavior that checks if a file exist on given storage mechanism. Then, we use API getParamValues() to get the file path. Finally, CWE-921 is found if the file path contains keyword sdcard.
+First, we design a detection rule `checkFileExistence.json` to spot on behavior that checks if a file exist on given storage mechanism. Then, we use API `getParamValues()` to get the file path. Finally, CWE-921 is found if the file path contains keyword `sdcard`.
 
 ## Quark Script CWE-921.py
 ```python

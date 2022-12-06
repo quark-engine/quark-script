@@ -1,10 +1,10 @@
 # Detect CWE-780 in Android Application (MSTG-Android-Java.apk)
 
-This scenario seeks to find the use of the RSA algorithm without Optimal Asymmetric Encryption Padding (OAEP). See [CWE-780](https://cwe.mitre.org/data/definitions/780.html) for more details.
+This scenario seeks to find **the use of the RSA algorithm without Optimal Asymmetric Encryption Padding (OAEP)**. See [CWE-780](https://cwe.mitre.org/data/definitions/780.html) for more details.
 
 Let’s use this [APK](https://github.com/OWASP/MASTG-Hacking-Playground) and the above APIs to show how the Quark script find this vulnerability.
 
-We first design a detection rule useOfCryptographicAlgo.json to spot on behavior using the cryptographic algorithm. Then, we use API behaviorInstance.hasString(pattern, isRegex) to filter behaviors using the RSA algorithm. Finally, we use the same API to check if the algorithm runs without the OAEP scheme. If the answer is YES, the plaintext is predictable.
+We first design a detection rule `useOfCryptographicAlgo.json` to spot on behavior using the cryptographic algorithm. Then, we use API *behaviorInstance.hasString(pattern, isRegex)* to filter behaviors using the RSA algorithm. Finally, we use the same API to check if the algorithm runs without the OAEP scheme. If the answer is YES, the plaintext is predictable.
 ## Quark Script CWE-780.py
 ```python
 from quark.script import Rule, runQuarkAnalysis

@@ -4,7 +4,7 @@ This scenario seeks to find cleartext storage of sensitive data in the APK file.
 
 Let’s use this [APK](https://github.com/oversecured/ovaa) and the above APIs to show how Quark script find this vulnerability.
 
-First, we designed a Frida script agent.js to hook the target method and get the arguments when the target method is called. Then we hook the method putString to catch its arguments. Finally, we use Ciphey to check if the arguments are encrypted.
+First, we designed a [Frida](https://frida.re/) script `agent.js` to hook the target method and get the arguments when the target method is called. Then we hook the method `putString` to catch its arguments. Finally, we use [Ciphey](https://github.com/Ciphey/Ciphey) to check if the arguments are encrypted.
 ## Quark Script CWE-312.py
 ```python
 from quark.script.frida import runFridaHook
