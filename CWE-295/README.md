@@ -4,7 +4,7 @@ This scenario seeks to find **Improper Certificate Validation**. See [CWE-295](h
 
 Let’s use this [APK](https://github.com/hax0rgb/InsecureShop) and the above APIs to show how the Quark script finds this vulnerability.
 
-We use the API `findMethodInAPK` to locate all `SslErrorHandler.proceed` methods. Then we need to identify whether if the method `WebViewClient.onReceivedSslError` is overrode by its subclass. 
+We use the API `findMethodInAPK` to locate all `SslErrorHandler.proceed` methods. Then we need to identify  whether the method `WebViewClient.onReceivedSslError` is overridden by its subclass. 
 
 First, we check and make sure that the `MethodInstance.name` is `onReceivedSslError`, and the `MethodInstance.descriptor` is `(Landroid/webkit/WebView; Landroid/webkit/SslErrorHandler; Landroid/net/http/SslError;)V`.
 
@@ -16,7 +16,7 @@ Finally, we check the `Landroid/webkit/WebViewClient;` is on the supclass list. 
 **MethodInstance.findSuperclassHierarchy()**
 * **Description:** Find all superclass hierarchy of this method object.
 * **params:** None
-* **Description:** Python list contains all superclas's name of the this method.
+* **Return:** Python list contains all superclas's name of the this method.
 
 
 ## Quark Script CWE-295.py
@@ -33,7 +33,7 @@ OVERRIDE_METHOD = [
     "Landroid/webkit/WebViewClient;",  # class name
     "onReceivedSslError",              # method name
     # descriptor
-    "(Landroid/webkit/WebView;Landroid/webkit/SslErrorHandler;Landroid/net/http/SslError;)V"
+    "(Landroid/webkit/WebView; Landroid/webkit/SslErrorHandler; Landroid/net/http/SslError;)V"
 ]
 
 for sslProceedCaller in findMethodInAPK(SAMPLE_PATH, TARGET_METHOD):

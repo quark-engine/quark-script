@@ -10,7 +10,7 @@ OVERRIDE_METHOD = [
     "Landroid/webkit/WebViewClient;",  # class name
     "onReceivedSslError",              # method name
     # descriptor
-    "(Landroid/webkit/WebView;Landroid/webkit/SslErrorHandler;Landroid/net/http/SslError;)V"
+    "(Landroid/webkit/WebView; Landroid/webkit/SslErrorHandler; Landroid/net/http/SslError;)V"
 ]
 
 for sslProceedCaller in findMethodInAPK(SAMPLE_PATH, TARGET_METHOD):
