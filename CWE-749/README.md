@@ -30,7 +30,7 @@ for configureJsExecution in quarkResult.behaviorOccurList:
     exposeAPI = quarkResult.findMethodInCaller(caller, targetMethod)
 
     if enableJS and exposeAPI:
-        print(f"CWE-749 is detected in method, {caller.fullName}"
+        print(f"CWE-749 is detected in method, {caller.fullName}")
 ```
 ## Quark Rule: configureJsExecution.json
 ```json
