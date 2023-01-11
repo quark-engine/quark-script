@@ -16,7 +16,7 @@ Finally, we check the `Landroid/webkit/WebViewClient;` is on the supclass list. 
 **MethodInstance.findSuperclassHierarchy()**
 * **Description:** Find all superclass hierarchy of this method object.
 * **params:** None
-* **Return:** Python list contains all superclas's name of the this method.
+* **Return:** Python list contains all superclass's name of the this method.
 
 
 ## Quark Script CWE-295.py
