@@ -8,9 +8,9 @@ We use the API `findMethodInAPK` to locate all `SslErrorHandler.proceed` methods
 
 First, we check and make sure that the `MethodInstance.name` is `onReceivedSslError`, and the `MethodInstance.descriptor` is `(Landroid/webkit/WebView; Landroid/webkit/SslErrorHandler; Landroid/net/http/SslError;)V`.
 
-Then we use the API `MethodInstance.findSuperclassHierarchy`to get the supclass list of the method's caller class.
+Then we use the method API `MethodInstance.findSuperclassHierarchy`to get the superclass list of the method's caller class.
 
-Finally, we check the `Landroid/webkit/WebViewClient;` is on the supclass list. If **YES** , that may cause CWE-295 vulnerability.
+Finally, we check the `Landroid/webkit/WebViewClient;` is on the superclass list. If **YES** , that may cause CWE-295 vulnerability.
 
 ## API Spec
 **MethodInstance.findSuperclassHierarchy()**
