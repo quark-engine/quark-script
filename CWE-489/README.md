@@ -1,4 +1,4 @@
-## Detect CWE-489 in Android Application (allsafe.apk)
+## Detect CWE-489 in Android Application (allsafe.apk, AndroGoat.apk, pivaa.apk)
 
 This scenario seeks to find **active debug code** in the APK file. See [CWE-489](https://cwe.mitre.org/data/definitions/489.html) for more details.
 
