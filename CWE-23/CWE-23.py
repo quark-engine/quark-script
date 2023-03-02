@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Mar  2 08:24:30 2023
-
-@author: poyenliang
-"""
-
 from quark.script import runQuarkAnalysis, Rule
 
 SAMPLE_PATH = "ovaa.apk"
