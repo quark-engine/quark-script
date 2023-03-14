@@ -22,9 +22,10 @@ for openUrl in result.behaviorOccurList:
     calledMethods = openUrl.getMethodsInArgs()
 
     if not any(method.methodName in VALIDATE_METHODS
-            for method in calledMethods):
+               for method in calledMethods):
         print("CWE-20 is detected in method,"
-            f"{openUrl.methodCaller.fullName}")
+              f"{openUrl.methodCaller.fullName}")
+
 ```
 
 ## Quark Rule: openUrlThatUserInput.json
