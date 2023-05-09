@@ -6,7 +6,7 @@ Let’s use both two of apks ([InsecureBankv2](https://github.com/dineshshetty/A
 
 In the first step, we use the `getReceivers` API to locate all `Receiver` components defined in the Android application. We then filter out all receivers that are not exported.
 
-In the second step, we need to verify whether each receiver that we found in the first step checks the **intentAction** in its **onReceive** method or not. To do this, we use `isCheckMethodsCalledInTarget` to check each receiver's implementation of **onReceive**.
+In the second step, we need to verify whether each receiver that we found in the first step checks the **intentAction** in its **onReceive** method or not. To do this, we use `checkMethodCalls` to check each receiver's implementation of **onReceive**.
 
 Finally, If the **intentAction** is not checked in the receiver's implementation of **onReceive**, this could lead to a CWE-925 vulnerability.
 
@@ -36,7 +36,7 @@ Finally, If the **intentAction** is not checked in the receiver's implementation
 * **Return:** Boolean object that indicate specific methods can be called or defined within a `target method` or not.
 
 
-## Quark Script CWE-295.py
+## Quark Script CWE-925.py
 ```python
 from quark.script import checkMethodCalls, getReceivers
 
