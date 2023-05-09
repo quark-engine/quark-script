@@ -1,10 +1,10 @@
 # Detect CWE-20 in Android Application (diva.apk)
 
-This scenario seeks to find Improper Input Validation. See [CWE-20](https://cwe.mitre.org/data/definitions/20.html) for more details.
+This scenario seeks to find **Improper Input Validation**. See [CWE-20](https://cwe.mitre.org/data/definitions/20.html) for more details.
 
 Let’s use this [APK](https://github.com/payatu/diva-android) and the above APIs to show how the Quark script finds this vulnerability.
 
-First, we design a detection rule `openUrlThatUserInput.json` to spot the behavior of opening the URL that the user input. Then we use API `behaviorInstance.getMethodsInArgs` to get a list of methods which the URL in `loadUrl` has passed through. Finally, we check if any validation method is in the list. If No, the APK does not validate user input. That causes CWE-20 vulnerability.
+First, we design a detection rule `openUrlThatUserInput.json` to spot the behavior of opening the URL that the user input. Then we use API `behaviorInstance.getMethodsInArgs` to get a list of methods which the URL in `loadUrl` has passed through. Finally, we check if any validation method is in the list. If **No**, the APK does not validate user input. That causes CWE-20 vulnerability.
 
 ## Quark Script: CWE-20.py
 ```python
