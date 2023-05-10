@@ -4,11 +4,11 @@ This scenario seeks to find **Improper Verification of Intent by Broadcast Recei
 
 Let’s use both two of apks ([InsecureBankv2](https://github.com/dineshshetty/Android-InsecureBankv2) and [AndroGoat](https://github.com/satishpatnayak/AndroGoat)) to show how the Quark script finds this vulnerability.
 
-In the first step, we use the `getReceivers` API to locate all `Receiver` components defined in the Android application. We then filter out all receivers that are not exported.
+In the first step, we use the `getReceivers` API to find all `Receiver` components defined in the Android application. Then, we exclude any receivers that are not exported.
 
-In the second step, we need to verify whether each receiver that we found in the first step checks the **intentAction** in its **onReceive** method or not. To do this, we use `checkMethodCalls` to check each receiver's implementation of **onReceive**.
+In the second step, our goal is to verify the **intentAction** is properly validated in each receiver which is identified in the previous step. To do this, we use the `checkMethodCalls` function.
 
-Finally, If the **intentAction** is not checked in the receiver's implementation of **onReceive**, this could lead to a CWE-925 vulnerability.
+Finally, if any receiver's **onReceive** method exhibits improper verification on **intentAction**, it could indicate a potential CWE-925 vulnerability.
 
 ## API Spec
 **receiverInstance.hasIntentFilter()**
