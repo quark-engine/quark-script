@@ -17,23 +17,23 @@ Finally, If the **intentAction** is not checked in the receiver's implementation
 * **Return:** True/False
 
 **receiverInstance.isExported()**
-* **Description:** Check if the receiver set `android:exported=true`.
+* **Description:** Check if the receiver is exported.
 * **params:** None
 * **Return:** True/False
 
 **getReceivers(samplePath)**
-* **Description:** Get receivers from the manifest of target sample.
+* **Description:** Get receivers from a target sample.
 * **params:**
-    * samplePath: the file path of target sample
-* **Return:** Python list containing receivers
+    * samplePath:  target file
+* **Return:** python list containing receivers
 
 **checkMethodCalls(samplePath, targetMethod, checkMethods)**
-* **Description:** Get receivers from the manifest of target sample.
+* **Description:**  Check if any of the specific methods shown in the `targetMethod`
 * **params:**
-    * samplePath: the file path of target sample
+    * samplePath: target file
     * targetMethod:  python list contains the class name,method name, and descriptor of the target method or a Method Object.
     * checkMethods: python list contains the class name, method name, and descriptor of the target method.
-* **Return:** Boolean object that indicate specific methods can be called or defined within a `target method` or not.
+* **Return:** bool that indicate specific methods can be called or defined within a `target method` or not.
 
 
 ## Quark Script CWE-925.py
