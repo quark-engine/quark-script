@@ -9,63 +9,58 @@ Second, we use API `methodInstance.getArguments()` to get the argument for the f
 Finally, we use Quark API `quarkResultInstance.findMethodInCaller(callerMethod, targetMethod)`  to check if any APIs in the caller method for opening files. If **YES**, the APK performs file operations using external input as a path, which may cause CWE-73 vulnerability.
 
 ## Quark Script CWE-73.py
-
 ```python
 
-    from quark.script import runQuarkAnalysis, Rule
+from quark.script import runQuarkAnalysis, Rule
 
-    SAMPLE_PATH = "ovaa.apk"
-    RULE_PATH = "accessFileInExternalDir.json"
 
-    OPEN_FILE_API = [
-        "Landroid/os/ParcelFileDescriptor;",                   # Class name
-        "open",                                                # Method name   
-        "(Ljava/io/File; I)Landroid/os/ParcelFileDescriptor;"  # Descriptor
-    ]
+SAMPLE_PATH = "ovaa.apk"
+RULE_PATH = "accessFileInExternalDir.json"
 
-    ruleInstance = Rule(RULE_PATH)
-    quarkResult = runQuarkAnalysis(SAMPLE_PATH, ruleInstance)
+OPEN_FILE_API = [
+    "Landroid/os/ParcelFileDescriptor;",                     # Class name
+    "open",                                                  # Method name   
+    "(Ljava/io/File; I)Landroid/os/ParcelFileDescriptor;"    # Descriptor
+]
 
-    for accessExternalDir in quarkResult.behaviorOccurList:
-        filePath = accessExternalDir.secondAPI.getArguments()[2]
-    
-        if quarkResult.isHardcoded(filePath):
-            continue
+rule_instance = Rule(RULE_PATH)
+quark_result = runQuarkAnalysis(SAMPLE_PATH, rule_instance)
 
-        caller = accessExternalDir.methodCaller
-        result = quarkResult.findMethodInCaller(caller, OPEN_FILE_API)
+for access_external_dir in quark_result.behavior_occur_list:
+    file_path = access_external_dir.second_api.get_arguments()[2]
 
-        if result:
-            print("CWE-73 is detected in method, ", caller.fullName)
-```
-         
+    if quark_result.is_hardcoded(file_path):
+        continue
+
+    caller = access_external_dir.method_caller
+    result = quark_result.find_method_in_caller(caller, OPEN_FILE_API)
+
+    if result:
+        print("CWE-73 is detected in method:", caller.full_name)
+```  
 ## Quark Rule: accessFileInExternalDir.json
-
 ```json
-
-    {
-        "crime": "Access a file in an external directory",
-        "permission": [],
-        "api": [
-            {
-                "class": "Landroid/os/Environment;",
-                "method": "getExternalStorageDirectory",
-                "descriptor": "()Ljava/io/File;"
-            },
-            {
-                "class": "Ljava/io/File;",
-                "method": "<init>",
-                "descriptor": "(Ljava/io/File;Ljava/lang/String;)V"
-            }
-        ],
-        "score": 1,
-        "label": []
-    }
+{
+    "crime": "Access a file in an external directory",
+    "permission": [],
+    "api": [
+        {
+            "class": "Landroid/os/Environment;",
+            "method": "getExternalStorageDirectory",
+            "descriptor": "()Ljava/io/File;"
+        },
+        {
+            "class": "Ljava/io/File;",
+            "method": "<init>",
+            "descriptor": "(Ljava/io/File;Ljava/lang/String;)V"
+        }
+    ],
+    "score": 1,
+    "label": []
+}
 ```
 ## Quark Script Result
-
-
 ```
-   $ python CWE-73.py
-   CWE-73 is detected in method, Loversecured/ovaa/providers/TheftOverwriteProvider; openFile (Landroid/net/Uri; Ljava/lang/String;)Landroid/os/ParcelFileDescriptor;
+$ python CWE-73.py
+CWE-73 is detected in method, Loversecured/ovaa/providers/TheftOverwriteProvider; openFile (Landroid/net/Uri; Ljava/lang/String;)Landroid/os/ParcelFileDescriptor;
 ```
