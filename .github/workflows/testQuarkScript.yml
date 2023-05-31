@@ -51,8 +51,7 @@ jobs:
     - name: Install Quark-Engine
       run: |
         cd quark-engine/
-        python setup.py build
-        python setup.py install
+        pip install .
         cd ..
     
     - name: Setup Sample Files For Testing Quark Scripts 
