@@ -6,11 +6,11 @@ Let’s use this [APK](https://github.com/jaiswalakshansh/Vuldroid) and the abov
 
 First, we design a detection rule ``ExternalStringsCommands.json`` to spot on behavior using external strings as commands.
 
-Next, we use Quark API ``behaviorInstance.getMethodsInArgs()`` to check if any APIs in the caller method for string matching. 
+Next, we use Quark API ``behaviorInstance.getMethodsInArgs()`` to get the methods that passed the external command.
 
-If NO, the APK does not neutralize special elements within the argument, which may cause CWE-78 vulnerability. 
+Then we check if the method neutralizes any special elements found in the argument.
 
-If YES, check if there are any special elements used in string matching for a filter. If NO, the APK does not neutralize special elements within the argument, which may cause CWE-78 vulnerability. 
+If the neutralization is not complete, then it may cause CWE-78 vulnerability.
 
 
 Quark Script CWE-78.py
@@ -46,9 +46,8 @@ for ExternalStringCommand in quarkResult.behaviorOccurList:
     for method in ExternalStringCommand.getMethodsInArgs():
         methodCalled.add(method.fullName)
 
-    if methodCalled.intersection(STRING_MATCHING_API):
-        if not ExternalStringCommand.hasString(specialElementsPattern):
-            print(f"CWE-78 is detected in method, {caller.fullName}")
+    if methodCalled.intersection(STRING_MATCHING_API) and not ExternalStringCommand.hasString(specialElementsPattern):
+        continue
     else:
         print(f"CWE-78 is detected in method, {caller.fullName}")
 
