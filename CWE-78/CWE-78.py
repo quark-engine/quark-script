@@ -25,8 +25,7 @@ for ExternalStringCommand in quarkResult.behaviorOccurList:
     for method in ExternalStringCommand.getMethodsInArgs():
         methodCalled.add(method.fullName)
 
-    if methodCalled.intersection(STRING_MATCHING_API):
-        if not ExternalStringCommand.hasString(specialElementsPattern):
-            print(f"CWE-78 is detected in method, {caller.fullName}")
+    if methodCalled.intersection(STRING_MATCHING_API) and not ExternalStringCommand.hasString(specialElementsPattern):
+        continue
     else:
         print(f"CWE-78 is detected in method, {caller.fullName}")
