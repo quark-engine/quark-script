@@ -1,6 +1,6 @@
-Detect CWE-88 in Android Application (Vuldroid.apk )
+Detect CWE-78 in Android Application (Vuldroid.apk )
 -----------------------------------------------------------------------
-This scenario seeks to find **Improper Neutralization of Argument Delimiters in a Command**. See [CWE-88](https://cwe.mitre.org/data/definitions/88.html) for more details.
+This scenario seeks to find **Improper Neutralization of Special Elements used in an OS Command**. See [CWE-78](https://cwe.mitre.org/data/definitions/78.html) for more details.
 
 Let’s use this [APK](https://github.com/jaiswalakshansh/Vuldroid) and the above APIs to show how the Quark script finds this vulnerability.
 
@@ -10,10 +10,10 @@ Next, we use Quark API ``behaviorInstance.getMethodsInArgs()`` to get the method
 
 Then we check if the method neutralizes any special elements found in the argument.
 
-If the neutralization is not complete, then it may cause CWE-88 vulnerability.
+If the neutralization is not complete, then it may cause CWE-78 vulnerability.
 
 
-Quark Script CWE-88.py
+Quark Script CWE-78.py
 =======================
 
 The Quark Script below uses Vuldroid.apk to demonstrate.
@@ -33,7 +33,7 @@ STRING_MATCHING_API = set([
     ("Ljava/lang/String;", "replaceAll", "(Ljava/lang/String; Ljava/lang/String;)Ljava/lang/String;")
 ])
 
-delimeter = "-"
+specialElementsPattern = r"[ ;|,>`]+"
 
 ruleInstance = Rule(RULE_PATH)
 quarkResult = runQuarkAnalysis(SAMPLE_PATH, ruleInstance)
@@ -46,10 +46,10 @@ for ExternalStringCommand in quarkResult.behaviorOccurList:
     for method in ExternalStringCommand.getMethodsInArgs():
         methodCalled.add(method.fullName)
 
-    if methodCalled.intersection(STRING_MATCHING_API) and not ExternalStringCommand.hasString(delimeter):
+    if methodCalled.intersection(STRING_MATCHING_API) and not ExternalStringCommand.hasString(specialElementsPattern):
         continue
     else:
-        print(f"CWE-88 is detected in method, {caller.fullName}")
+        print(f"CWE-78 is detected in method, {caller.fullName}")
 
 ```
                 
@@ -82,6 +82,6 @@ Quark Script Result
 - **Vuldroid.apk**
 
 ```
-$ python3 CWE-88.py
-CWE-88 is detected in method, Lcom/vuldroid/application/RootDetection; onCreate (Landroid/os/Bundle;)V
+$ python3 CWE-78.py
+CWE-78 is detected in method, Lcom/vuldroid/application/RootDetection; onCreate (Landroid/os/Bundle;)V
 ```

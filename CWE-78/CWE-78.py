@@ -12,7 +12,7 @@ STRING_MATCHING_API = set([
     ("Ljava/lang/String;", "replaceAll", "(Ljava/lang/String; Ljava/lang/String;)Ljava/lang/String;")
 ])
 
-delimeter = "-"
+specialElementsPattern = r"[ ;|,>`]+"
 
 ruleInstance = Rule(RULE_PATH)
 quarkResult = runQuarkAnalysis(SAMPLE_PATH, ruleInstance)
@@ -25,7 +25,7 @@ for ExternalStringCommand in quarkResult.behaviorOccurList:
     for method in ExternalStringCommand.getMethodsInArgs():
         methodCalled.add(method.fullName)
 
-    if methodCalled.intersection(STRING_MATCHING_API) and not ExternalStringCommand.hasString(delimeter):
+    if methodCalled.intersection(STRING_MATCHING_API) and not ExternalStringCommand.hasString(specialElementsPattern):
         continue
     else:
-        print(f"CWE-88 is detected in method, {caller.fullName}")
+        print(f"CWE-78 is detected in method, {caller.fullName}")
