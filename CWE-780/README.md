@@ -19,7 +19,7 @@ for useCryptographicAlgo in quarkResult.behaviorOccurList:
 
     methodCaller = useCryptographicAlgo.methodCaller
 
-    if useCryptographicAlgor.hasString("RSA") and \
+    if useCryptographicAlgo.hasString("RSA") and \
         not useCryptographicAlgo.hasString("OAEP"):
         print(f"CWE-780 is detected in method, {methodCaller.fullName}")
 ```
