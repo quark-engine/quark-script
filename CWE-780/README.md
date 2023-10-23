@@ -16,11 +16,11 @@ ruleInstance = Rule(RULE_PATH)
 quarkResult = runQuarkAnalysis(SAMPLE_PATH, ruleInstance)
 
 for useCryptographicAlgo in quarkResult.behaviorOccurList:
-
     methodCaller = useCryptographicAlgo.methodCaller
 
-    if useCryptographicAlgor.hasString("RSA") and \
-        not useCryptographicAlgo.hasString("OAEP"):
+    if useCryptographicAlgo.hasString(
+        "RSA"
+    ) and not useCryptographicAlgo.hasString("OAEP"):
         print(f"CWE-780 is detected in method, {methodCaller.fullName}")
 ```
 
