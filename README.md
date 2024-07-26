@@ -1,30 +1,45 @@
 # Quark Script Agent
 
-Introducing Quark's new member, Quark Script Agent, the first AI assistant in the Quark team. This agent enables users to perform analyses through natural language without the need for programming or scripting knowledge, enhancing the usability of the Quark Script API.
+Introducing Quark's new member, the Quark Script Agent, the first AI assistant in the Quark team. This agent enables users to perform analyses using natural language, without the need for programming or scripting expertise, making the process simple and user-friendly.
 
-Quark Script Agent integrates with LangChain, connecting large language models with the Quark Script API. This integration enables users to perform analyses using natural language commands, eliminating the need for programming or scripting knowledge.
+The Quark Script Agent integrates with LangChain, which utilizes OpenAI's large language models to act as a bridge between natural language and the Quark Script API. LangChain defines the Quark Script API as a tool that large language models can understand and use. This means that users can easily call new analysis APIs using natural language commands by simply adding new tools as needed.
 
-LangChain acts as a bridge between the Quark Script API and natural language, using OpenAI's large language models. It defines the Quark Script API as a tool, allowing large language models to understand and use it. This integration enables users to interact with the Quark Script API through natural language commands, making it more accessible and user-friendly.
+
+Here's an example of using the Quark Script Agent with the `quarkScriptAgent.py`. This agent can currently detect [CWE-798](https://cwe.mitre.org/data/definitions/798.html) vulnerabilities in the [ovaa.apk](https://github.com/oversecured/ovaa). See the details below.
 
 > Since LangChain currently does not support passing Python instances between tools, we are temporarily using global variables to pass parameters between tools in `quarkScriptAgent.py`.
 
 ## Use case of Quark Script CWE-798
 
+### Installation
+
+To install the Quark Script Agent, you need to install the following dependencies:
+
+1. clone the repository:
+```
+git clone https://github.com/quark-engine/quark-script.git
+```
+
+2. Install the required packages:
+```
+pip install -r requirements.txt
+```
+
+3. Run the script:
+```
+python quarkScriptAgent.py
+```
+
+### Analysis Process
+
 Quark Script CWE-798 analysis process:
 
-1. Use the Quark Script API `Rule()` to define behavior.
-2. Use the Quark Script API `runQuarkAnalysis()` to locate the  behavior.
+1. Use the Quark Script API `Rule()` to define behavior in the `rule.json` file.
+2. Use the Quark Script API `runQuarkAnalysis()` to locate the behavior.
 4. Use the Quark Script API `getParameterValues()` to retrieve parameter values.
 5. Use the Quark Script API `isHardCoded()` to check if a parameter is hard-coded.
 
-The `Rule()`, `runQuarkAnalysis()`, `getParameterValues()`, and `isHardCoded()` functions are treated as **tools** within LangChain, enabling them to be invoked through the `gpt-4o` model to analyze and identify [CWE-798](https://cwe.mitre.org/data/definitions/798.html) vulnerabilities in the [ovaa.apk](https://github.com/oversecured/ovaa) sample.
-
-
-### Architecture
-
-<img width="829" alt="截圖 2024-07-26 下午3 40 32" src="https://github.com/user-attachments/assets/f17bfba0-43d7-4236-9775-bb0d3b961907">
-
-### rule.json
+the `rule.json` file contains the following information:
 
 ```json=
 {
@@ -47,21 +62,26 @@ The `Rule()`, `runQuarkAnalysis()`, `getParameterValues()`, and `isHardCoded()` 
 }
 ```
 
+The `Rule()`, `runQuarkAnalysis()`, `getParameterValues()`, and `isHardCoded()` functions are treated as **tools** within LangChain, enabling them to be invoked through the `gpt-4o` model to analyze and identify [CWE-798](https://cwe.mitre.org/data/definitions/798.html) vulnerabilities in the [ovaa.apk](https://github.com/oversecured/ovaa) sample.
 
+
+### Architecture
+
+<img width="829" alt="截圖 2024-07-26 下午3 40 32" src="https://github.com/user-attachments/assets/f17bfba0-43d7-4236-9775-bb0d3b961907">
 
 ### Prompts
 
-Here are two prompts, each for executing different analysis steps.
+Here are two prompts, each for executing different analysis process.
 
-**analysis step**
+**analysis process**
 
-1. Use the Quark Script API `Rule()` to define behavior.
+1. Use the Quark Script API `Rule()` to define behavior in the `rule.json` file.
 
 **prompt**
 
 `Initialize rule instance with the rule path set to "rule.json"`
 
-**analysis steps**
+**analysis process**
 
 2. Use the Quark Script API `runQuarkAnalysis()` to locate the behavior.
 3. Use the Quark Script API `getParameterValues()` to retrieve parameter values.
