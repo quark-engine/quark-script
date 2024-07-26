@@ -51,5 +51,4 @@ The `Rule()`, `runQuarkAnalysis()`, `getParameterValues()`, and `isHardCoded()` 
 
 * Notes: 
   1. Since LangChain currently does not support passing Python instances between tools, we are temporarily using global variables to pass parameters between tools in `quarkScriptAgent.py`.
-  2. This is a POC (Prove of Concept) the paths of the apk file and the rule file are hard-coded in the quarkScriptAgent.py
-  3. A web GUI is under construction, please stay tuned!
+  2. A web GUI is under construction, please stay tuned!

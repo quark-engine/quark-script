@@ -19,14 +19,14 @@ if "OPENAI_API_KEY" not in os.environ:
 
 
 @tool
-def defineRuleByJson():
+def loadRule(rulePath):
     """
-    This instance defines the detection rule
-    by loading the rule from a JSON.
+    Given a rule path,
+    this instance loads a rule from the rule path.
     """
 
     global ruleInstance
-    ruleInstance = Rule("rule.json")
+    ruleInstance = Rule(rulePath)
 
     return "Rule defined successfully"
 
@@ -35,7 +35,7 @@ def defineRuleByJson():
 def runQuarkAnalysis(samplePath):
     """
     Given detection rule and target sample,
-    this instance runs the basic Quark.
+    this instance runs the Quark Analysis.
     """
 
     global ruleInstance
@@ -48,7 +48,7 @@ def runQuarkAnalysis(samplePath):
 
 
 @tool
-def getBehaviorOccurLise():
+def getBehaviorOccurList():
     """
     Given the Quark analysis result,
     this instance extracts the behavior occurrence list.
@@ -89,7 +89,7 @@ def isHardCoded():
     global parameters
     global quarkResultInstance
 
-    # check parameters values are hard-coded
+    # check parameter values are hard-coded
     if parameters in quarkResultInstance.getAllStrings():
         return parameters
 
