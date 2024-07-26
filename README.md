@@ -9,7 +9,7 @@ Here's an example of using the Quark Script Agent with the `quarkScriptAgent.py`
 
 > Since LangChain currently does not support passing Python instances between tools, we are temporarily using global variables to pass parameters between tools in `quarkScriptAgent.py`.
 
-## Use case of Quark Script CWE-798
+## Quick Start: Detecting CWE-798 in ovaa.apk with Quark Script Agent
 
 ### Installation
 
