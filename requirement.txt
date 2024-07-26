@@ -1,0 +1,5 @@
+termcolor==2.4.0
+langchain==0.2.11
+langchain-core==0.2.23
+langchain-openai==0.1.17
+quark-engine==24.7.1
