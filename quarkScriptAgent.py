@@ -19,7 +19,7 @@ if "OPENAI_API_KEY" not in os.environ:
 
 
 @tool
-def loadRule(rulePath):
+def loadRule(rulePath: str):
     """
     Given a rule path,
     this instance loads a rule from the rule path.
@@ -32,7 +32,7 @@ def loadRule(rulePath):
 
 
 @tool
-def runQuarkAnalysis(samplePath):
+def runQuarkAnalysis(samplePath: str):
     """
     Given detection rule and target sample,
     this instance runs the Quark Analysis.
@@ -97,9 +97,9 @@ def isHardCoded():
 
 
 tools = [
-    defineRuleByJson,
+    loadRule,
     runQuarkAnalysis,
-    getBehaviorOccurLise,
+    getBehaviorOccurList,
     getParameterValues,
     isHardCoded,
 ]
