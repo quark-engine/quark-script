@@ -34,17 +34,17 @@ Here are two prompts, each for executing different analysis processes.
 ```
 1st Prompt: Initialize the rule instance with the rule path set to "rule.json"
 ```
-Used Quark Script APIs/Tools that LLM used:  `Rule()`
+Used Quark Script APIs/Tools that LLM used:  `loadRule`
 
 ```
 2nd Prompt: Run Quark Analysis using the rule instance on the apk sample "ovaa.apk", 
             and Check if the parameters are hard-coded. If yes, display the hard-coded values.
 ```
-Used Quark Script APIs/Tools that LLM used: `runQuarkAnalysis()`, `getParameterValues()` and `isHardCoded()`
+Used Quark Script APIs/Tools that LLM used: `runQuarkAnalysis`, `getBehaviorOccurList`, `getParameterValues` and `isHardCoded`
 
-The `Rule()`, `runQuarkAnalysis()`, `getParameterValues()`, and `isHardCoded()` functions are treated as **tools** within LangChain, enabling them to be invoked through the `gpt-4o` model to analyze and identify [CWE-798](https://cwe.mitre.org/data/definitions/798.html) vulnerabilities in the [ovaa.apk](https://github.com/oversecured/ovaa) sample.
+The `loadRule`, `runQuarkAnalysis`, `getBehaviorOccurList`, `getParameterValues`, and `isHardCoded` functions are treated as **tools** within LangChain, enabling them to be invoked through the `gpt-4o` model to analyze and identify [CWE-798](https://cwe.mitre.org/data/definitions/798.html) vulnerabilities in the [ovaa.apk](https://github.com/oversecured/ovaa) sample.
 
-<img width="829" alt="截圖 2024-07-26 下午9 25 23" src="https://github.com/user-attachments/assets/14de8563-e52e-4bdc-9960-ec73cbd10ada">
+<img width="845" alt="截圖 2024-07-27 下午8 45 25" src="https://github.com/user-attachments/assets/1dd8fb68-9ab4-4afc-a15a-006ff468a883">
 
 
 * Notes: 
