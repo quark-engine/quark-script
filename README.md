@@ -46,9 +46,10 @@ Used Quark Script APIs/Tools that LLM used: `runQuarkAnalysis()`, `getParameterV
 
 The `Rule()`, `runQuarkAnalysis()`, `getParameterValues()`, and `isHardCoded()` functions are treated as **tools** within LangChain, enabling them to be invoked through the `gpt-4o` model to analyze and identify [CWE-798](https://cwe.mitre.org/data/definitions/798.html) vulnerabilities in the [ovaa.apk](https://github.com/oversecured/ovaa) sample.
 
-<img width="829" alt="截圖 2024-07-26 下午9 25 49" src="https://github.com/user-attachments/assets/cb9ae25f-da59-491b-a4e5-41dfb098966c">
+<img width="829" alt="截圖 2024-07-26 下午9 25 23" src="https://github.com/user-attachments/assets/14de8563-e52e-4bdc-9960-ec73cbd10ada">
 
 
 * Notes: 
   1. Since LangChain currently does not support passing Python instances between tools, we are temporarily using global variables to pass parameters between tools in `quarkScriptAgent.py`.
-  2. A web GUI is under construction, please stay tuned!
+  2. Place the rules, samples, and code in the same folder; the LLM will automatically find files with matching names.
+  3. A web GUI is under construction, please stay tuned!
