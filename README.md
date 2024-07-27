@@ -7,9 +7,7 @@ The Quark Script Agent integrates with LangChain, which utilizes OpenAI's large 
 ## Showcase: Detecting CWE-798 with Quark Script Agent
 Here's an example of using the Quark Script Agent with the `quarkScriptAgent.py`. This agent can currently detect [CWE-798](https://cwe.mitre.org/data/definitions/798.html) vulnerability in the [ovaa.apk](https://github.com/oversecured/ovaa). See the details below.
 
-### Installation
-
-To install the Quark Script Agent, you need to install the following dependencies:
+### Quick Start
 
 1. clone the repository:
 ```
@@ -26,7 +24,7 @@ pip install -r requirements.txt
 python quarkScriptAgent.py
 ```
 
-### Result
+4. Result:
 
 <img width="1440" alt="截圖 2024-07-26 下午3 39 12" src="https://github.com/user-attachments/assets/9c8ba9d3-c8b5-4583-8cb8-750f8c3bf2a7">
 
