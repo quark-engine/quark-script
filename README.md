@@ -51,5 +51,5 @@ The `Rule()`, `runQuarkAnalysis()`, `getParameterValues()`, and `isHardCoded()` 
 
 * Notes: 
   1. Since LangChain currently does not support passing Python instances between tools, we are temporarily using global variables to pass parameters between tools in `quarkScriptAgent.py`.
-  2. Place the rules, samples, and code in the same folder; the LLM will automatically find files with matching names.
+  2. Place the rules, samples, and `quarkScriptAgent.py` in the same folder; the LLM will automatically find files with matching names.
   3. A web GUI is under construction, please stay tuned!
