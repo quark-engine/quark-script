@@ -44,7 +44,7 @@ Used Quark Script APIs/Tools that LLM used: `runQuarkAnalysis`, `getBehaviorOccu
 
 The `Rule`, `runQuarkAnalysis`, `getBehaviorOccurList`, `getParameterValues`, and `isHardCoded` functions are treated as **tools** within LangChain, enabling them to be invoked through the `gpt-4o` model to analyze and identify [CWE-798](https://cwe.mitre.org/data/definitions/798.html) vulnerabilities in the [ovaa.apk](https://github.com/oversecured/ovaa) sample.
 
-<img width="820" alt="截圖 2024-07-27 下午5 16 55" src="https://github.com/user-attachments/assets/4962a740-3df3-4e5e-9365-4ad0ff51f5a5">
+<img width="845" alt="截圖 2024-07-27 下午8 45 25" src="https://github.com/user-attachments/assets/1dd8fb68-9ab4-4afc-a15a-006ff468a883">
 
 
 * Notes: 
