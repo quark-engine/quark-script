@@ -1,5 +1,4 @@
 import os
-import re
 
 from termcolor import colored
 
@@ -18,11 +17,27 @@ if "OPENAI_API_KEY" not in os.environ:
     os.environ["OPENAI_API_KEY"] = api_key
 
 
+conversation_history = []
+
+
 @tool
 def loadRule(rulePath: str):
     """
     Given a rule path,
     this instance loads a rule from the rule path.
+
+    Used Quark Script API: Rule(rule.json)
+    - description: Making detection rule a rule instance
+    - params: Path of a single Quark rule
+    - return: Quark rule instance
+    - example:
+
+        .. code:: python
+
+            from quark.script import Rule
+
+            ruleInstance = Rule("rule.json")
+
     """
 
     global ruleInstance
@@ -36,6 +51,22 @@ def runQuarkAnalysis(samplePath: str):
     """
     Given detection rule and target sample,
     this instance runs the Quark Analysis.
+
+    Used Quark Script API: runQuarkAnalysis(SAMPLE_PATH, ruleInstance)
+    - description: Given detection rule and target sample,
+                   this instance runs the basic Quark analysis
+    - params:
+        1. SAMPLE_PATH: Target file
+        2. ruleInstance: Quark rule object
+    - return: quarkResult instance
+    - example:
+
+        .. code:: python
+
+            from quark.script import runQuarkAnalysis
+
+            quarkResult = runQuarkAnalysis("sample.apk", ruleInstance)
+
     """
 
     global ruleInstance
@@ -50,8 +81,23 @@ def runQuarkAnalysis(samplePath: str):
 @tool
 def getBehaviorOccurList():
     """
-    Given the Quark analysis result,
-    this instance extracts the behavior occurrence list.
+    Extracts the behavior occurrence list from quark analysis result.
+
+    Used Quark Script API: quarkResultInstance.behaviorOccurList
+    - description: List that stores instances of detected behavior
+                   in different part of the target file
+    - params: none
+    - return: detected behavior instance
+    - example:
+
+        .. code:: python
+
+            from quark.script import runQuarkAnalysis
+
+            quarkResult = runQuarkAnalysis("sample.apk", ruleInstance)
+            for behavior in quarkResult.behaviorOccurList:
+                print(behavior)
+
     """
 
     global quarkResultInstance
@@ -66,34 +112,87 @@ def getParameterValues():
     """
     Given the behavior occurrence list,
     this instance extracts the parameter values.
+
+    Used Quark Script API: behaviorInstance.getParamValues(none)
+
+    - description: Get parameter values that API1 sends to API2 in the behavior
+    - params: none
+    - return: python list containing parameter values.
+    - example:
+
+        .. code:: python
+
+            from quark.script import runQuarkAnalysis
+
+            quarkResult = runQuarkAnalysis("sample.apk", ruleInstance)
+            for behavior in quarkResult.behaviorOccurList:
+                paramValues = behavior.getParamValues()
+                print(paramValues)
     """
 
     global behaviorOccurList
     global parameters
 
     for behavior in behaviorOccurList:
-        param = behavior.getParamValues()[1]
+        parameters = behavior.getParamValues()
 
-    parameters = re.findall(r"\((.*?)\)", param)[1]
-
-    return "Parameter values extracted successfully"
+    return parameters
 
 
 @tool
 def isHardCoded():
     """
     Given the parameter values,
-    this instance checks if the parameter values are hard-coded.
+    this instance checks if the parameter values are hard-coded
+    and return the hard-coded parameter.
+
+    Used Quark Script API: quarkResultInstance.isHardcoded(argument)
+    - description: Check if the argument is hardcoded into the APK.
+    - params:
+        1. argument: string value that is passed in when a method is invoked
+    - return: True/False
+    - example:
+
+        .. code:: python
+
+            from quark.script import runQuarkAnalysis
+
+            quarkResult = runQuarkAnalysis("sample.apk", ruleInstance)
+            isHardcoded = quarkResult.isHardcoded("hardcodedValue")
+            print(isHardcoded)
     """
 
     global parameters
     global quarkResultInstance
 
-    # check parameter values are hard-coded
-    if parameters in quarkResultInstance.getAllStrings():
-        return parameters
+    hardcodedParameters = []
+    for parameter in parameters:
+        if quarkResultInstance.isHardcoded(parameter):
+            hardcodedParameters.append(parameter)
 
-    return False
+    return hardcodedParameters
+
+
+@tool
+def writeCodeInFile(code: str, pyFile: str):
+    """
+    Given the code and file name, this instance writes the code in the file.
+    """
+
+    with open(pyFile, "w") as file:
+        file.write(code)
+
+    return pyFile
+
+
+@tool
+def executeCode(pyFile: str):
+    """
+    Given the code file, this instance executes the code.
+    """
+
+    os.system(f"python {pyFile}")
+    return "Code executed successfully"
 
 
 tools = [
@@ -102,10 +201,12 @@ tools = [
     getBehaviorOccurList,
     getParameterValues,
     isHardCoded,
+    writeCodeInFile,
+    executeCode,
 ]
 
 
-llm = ChatOpenAI(model="gpt-4o", temperature=0.1)
+llm = ChatOpenAI(model="gpt-4o", temperature=0.2)
 llm_with_tools = llm.bind_tools(tools)
 
 prompt = ChatPromptTemplate.from_messages([
@@ -134,11 +235,14 @@ agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=False)
 input_text = input(colored('User Input: ', 'green'))
 while input_text.lower() != 'bye':
     if input_text:
+        conversation_history.append(input_text)
         response = agent_executor.invoke({
             'input': input_text,
         })
         print()
         print(colored('Agent: ', "cyan"), response['output'])
         print()
+
+        conversation_history.append(response['output'])
 
         input_text = input(colored('User Input: ', 'green'))
