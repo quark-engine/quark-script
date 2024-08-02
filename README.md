@@ -31,7 +31,7 @@ python quarkScriptAgent.py
 
 5. Result:
 
-<img width="1440" alt="截圖 2024-07-26 下午3 39 12" src="https://github.com/user-attachments/assets/9c8ba9d3-c8b5-4583-8cb8-750f8c3bf2a7">
+<img width="1440" alt="截圖 2024-07-26 下午3 39 12" src="https://hackmd.io/_uploads/SJZZpf9FR.png">
 
 ### Decode the Prompts
 Here are two prompts, each for executing different analysis processes.
@@ -52,19 +52,15 @@ The `loadRule`, `runQuarkAnalysis`, `getBehaviorOccurList`, `getParameterValues`
 <img width="845" alt="截圖 2024-07-27 下午8 45 25" src="https://hackmd.io/_uploads/BkplMjvYR.png">
 
 
-## Use Quark Script Agent to Generate Quark Script
+## Showcase: Generating Quark Script with Quark Script Agent
 
 Quark Script Agent allows you to automate the creation of Quark Script code. This lets users concentrate on designing the detection process, while the LLM and Quark Script API handle the coding. This approach greatly enhances efficiency and streamlines the workflow.
 
 Here's an example for generating a Quark Script to detect CWE-798.
 
-### CWE-798 Detection Process
+### Demo Video
 
-1. Define the behavior "Construct Cryptographic Key" in the rule instance.
-2. Run Quark Analysis using the rule instance on the APK sample.
-3. Obtain all instances of detected behaviors from the Quark Analysis results.
-4. Retrieve the parameter values for each occurred behavior.
-5. Check if any parameters are hard-coded. If found, print the hard-coded parameters.
+https://github.com/user-attachments/assets/dc0e782b-3500-4260-a961-c499c14e495c
 
 ### Decode the Prompts
 
@@ -86,8 +82,18 @@ Sure, I'd be happy to help with that. Please provide the sample APK file and the
 
 #### Instruct the detection process.
 
-Instruct the Quark Script Agent to detect CWE-798 using your detection process.
-(Include details like the sample or rule path)
+Instruct the Quark Script Agent to detect CWE-798 using the following detection process.
+
+```!
+Detection Process:
+1. Define the behavior "Construct Cryptographic Key" in the rule instance.
+2. Run Quark Analysis using the rule instance on the APK sample.
+3. Obtain all instances of detected behaviors from the Quark Analysis results.
+4. Retrieve the parameter values for each occurred behavior.
+5. Check if any parameters are hard-coded. If found, print the hard-coded parameters.
+```
+
+>Note: The prompt will include details like the sample or rule path.
 
 
 1. Define the behavior "Construct Cryptographic Key" in the rule instance.
@@ -206,14 +212,6 @@ We added 2 tools, `writeCodeInFile` and `executeCode`, to enable Quark Script Ag
 
 ### 
 <img width="845" alt="截圖 2024-07-27 下午8 45 25" src="https://github.com/user-attachments/assets/d8fd805a-86c9-4eff-b120-d340fc43d792">
-
-### Demo Video
-
-
-
-https://github.com/user-attachments/assets/dc0e782b-3500-4260-a961-c499c14e495c
-
-
 
 
 * Notes: 
