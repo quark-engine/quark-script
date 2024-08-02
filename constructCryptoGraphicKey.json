@@ -1,5 +1,5 @@
 {
-    "crime": "Detect APK using SecretKeySpec.",
+    "crime": "Construct cryptographic key",
     "permission": [],
     "api": [
         {

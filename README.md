@@ -19,20 +19,25 @@ git clone https://github.com/quark-engine/quark-script.git
 pip install -r requirements.txt
 ```
 
-3. Run the script:
+3. Add your OpenAI API key in quarkscriptAgent.py.
+```python
+os.environ["OPENAI_API_KEY"] = {your API Key}
+```
+
+4. Run the script:
 ```
 python quarkScriptAgent.py
 ```
 
-4. Result:
+5. Result:
 
-<img width="1440" alt="截圖 2024-07-26 下午3 39 12" src="https://github.com/user-attachments/assets/9c8ba9d3-c8b5-4583-8cb8-750f8c3bf2a7">
+<img width="1440" alt="截圖 2024-07-26 下午3 39 12" src="https://hackmd.io/_uploads/SJZZpf9FR.png">
 
 ### Decode the Prompts
 Here are two prompts, each for executing different analysis processes.
 
 ```
-1st Prompt: Initialize the rule instance with the rule path set to "rule.json"
+1st Prompt: Initialize the rule instance with the rule path set to "constructCryptoGraphicKey.json"
 ```
 Used Quark Script APIs/Tools that LLM used:  `loadRule`
 
@@ -44,10 +49,175 @@ Used Quark Script APIs/Tools that LLM used: `runQuarkAnalysis`, `getBehaviorOccu
 
 The `loadRule`, `runQuarkAnalysis`, `getBehaviorOccurList`, `getParameterValues`, and `isHardCoded` functions are treated as **tools** within LangChain, enabling them to be invoked through the `gpt-4o` model to analyze and identify [CWE-798](https://cwe.mitre.org/data/definitions/798.html) vulnerabilities in the [ovaa.apk](https://github.com/oversecured/ovaa) sample.
 
-<img width="845" alt="截圖 2024-07-27 下午8 45 25" src="https://github.com/user-attachments/assets/1dd8fb68-9ab4-4afc-a15a-006ff468a883">
+<img width="845" alt="截圖 2024-07-27 下午8 45 25" src="https://hackmd.io/_uploads/BkplMjvYR.png">
+
+
+## Showcase: Generating Quark Script with Quark Script Agent
+
+Quark Script Agent allows you to automate the creation of Quark Script code. This lets users concentrate on designing the detection process, while the LLM and Quark Script API handle the coding. This approach greatly enhances efficiency and streamlines the workflow.
+
+Here's an example for generating a Quark Script to detect CWE-798.
+
+### Demo Video
+
+https://github.com/user-attachments/assets/dc0e782b-3500-4260-a961-c499c14e495c
+
+### Decode the Prompts
+
+Now, let's instruct the Quark Script Agent to detect CWE-798 and write the Quark Script for the detection process using the following prompt.
+
+#### Assign a role to the Agent
+
+To make the Quark Script Agent's responses more precise and relevant to vulnerability detection, we assign it the role of an Android APK vulnerability analyst.
+
+```!
+User: 
+Now you are an Android APK vulnerability analyst. Please follow the steps below to analyze a sample.
+```
+
+```!
+Agent: 
+Sure, I'd be happy to help with that. Please provide the sample APK file and the detection rule file that you would like to use for the analysis.
+```
+
+#### Instruct the detection process
+
+Instruct the Quark Script Agent to detect CWE-798 using the following detection process.
+
+```!
+Detection Process:
+1. Define the behavior "Construct Cryptographic Key" in the rule instance.
+2. Run Quark Analysis using the rule instance on the APK sample.
+3. Obtain all instances of detected behaviors from the Quark Analysis results.
+4. Retrieve the parameter values for each occurred behavior.
+5. Check if any parameters are hard-coded. If found, print the hard-coded parameters.
+```
+
+>Note: The prompt will include details like the sample or rule path.
+
+
+1. Define the behavior "Construct Cryptographic Key" in the rule instance.
+```!
+User: 
+1. Define the behavior "Construct Cryptographic Key" in the rule instance, with the rule path set to "constructCryptoGraphicKey.json".
+```
+
+```!
+Agent: 
+The behavior "Construct Cryptographic Key" has been successfully defined in the rule instance with the rule path set to "constructCryptoGraphicKey.json". How would you like to proceed?
+```
+
+2. Run Quark Analysis using the rule instance on the APK sample.
+```!
+User:
+2. Run Quark Analysis using the rule instance on the APK sample "ovaa.apk".
+```
+```!
+Agent:
+The Quark analysis on the APK sample "ovaa.apk" has been completed successfully. What would you like to do next?
+```
+
+3. Obtain all instances of detected behaviors from the Quark Analysis results.
+```!
+User:
+3. Obtain all instances of detected behaviors from the Quark Analysis results in the sample "ovaa.apk".
+```
+
+```!
+Agent
+I have obtained all instances of detected behaviors from the Quark Analysis results in the sample "ovaa.apk". If you need further details or specific information about these behaviors, please let me know!
+```
+
+4. Retrieve the parameter values for each occurred behavior.
+```!
+User:
+4. Retrieve the parameter values for each occurred behavior.
+```
+
+```!
+Agent:
+The parameter values for the occurred behavior are:
+1. "49u5gh249gh24985ghf429gh4ch8f23f"
+2. "AES"
+
+Would you like to check if any of these values are hard-coded?
+```
+
+5. Check if any parameters are hard-coded. If found, print the hard-coded parameters.
+```!
+User:
+5. Check if any parameter values are hard-coded. If yes, display the hard-coded values.
+```
+
+```!
+Agent:
+The following parameter values are hard-coded:
+
+1. `49u5gh249gh24985ghf429gh4ch8f23f`
+2. `AES`
+```
+
+#### Generate Quark Script
+Finally, ask the Quark Script Agent to write and execute the Python code based on the detection process outlined above.
+
+```!
+User:
+Using the Quark Script API, implement the above logic in Python and save it to 'detectCWE798.py', with the rule path set to 'constructCryptoGraphicKey.json' and the sample path to 'ovaa.apk'.
+```
+
+```!
+Agent:
+The code has been written to `detectCWE798.py`. You can now execute this script to perform the analysis.
+```
+
+Here is the generated code:
+```python
+from quark.script import Rule, runQuarkAnalysis
+
+# Load the rule
+rule_path = 'constructCryptoGraphicKey.json'
+rule_instance = Rule(rule_path)
+
+# Define the sample path
+sample_path = 'ovaa.apk'
+
+# Run the Quark analysis
+quark_result = runQuarkAnalysis(sample_path, rule_instance)
+
+# Extract the behavior occurrence list
+behavior_occur_list = quark_result.behaviorOccurList
+
+# Iterate through each behavior and get parameter values
+for behavior in behavior_occur_list:
+    param_values = behavior.getParamValues()
+    for param in param_values:
+        # Check if the parameter value is hardcoded
+        is_hardcoded = quark_result.isHardcoded(param)
+        if is_hardcoded:
+            print(f'Hardcoded value found: {param}')
+```
+
+```!
+User:
+Execute detectCWE798.py
+```
+
+Here is the result.
+```shell
+Hardcoded value found: 49u5gh249gh24985ghf429gh4ch8f23f
+Hardcoded value found: AES
+```
+
+We added 2 tools, `writeCodeInFile` and `executeCode`, to enable Quark Script Agent to generate and execute Quark Script code.
+
+### 
+<img width="845" alt="截圖 2024-07-27 下午8 45 25" src="https://github.com/user-attachments/assets/d8fd805a-86c9-4eff-b120-d340fc43d792">
 
 
 * Notes: 
-  1. Since LangChain currently does not support passing Python instances between tools, we are temporarily using global variables to pass parameters between tools in `quarkScriptAgent.py`.
-  2. Place the rules, samples, and `quarkScriptAgent.py` in the same folder; the LLM will automatically find files with matching names.
-  3. A web GUI is under construction, please stay tuned!
+  1. The code is generated by OpenAI's GPT model, and the output may not always match the documentation exactly.
+  2. Since LangChain currently does not support passing Python instances between tools, we are temporarily using global variables to pass parameters between tools in `quarkScriptAgent.py`.
+  3. Place the rules, samples, and `quarkScriptAgent.py` in the same folder; the LLM will automatically find files with matching names.
+  4. A web GUI is under construction, please stay tuned!
+
+
