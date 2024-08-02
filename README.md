@@ -80,7 +80,7 @@ Agent:
 Sure, I'd be happy to help with that. Please provide the sample APK file and the detection rule file that you would like to use for the analysis.
 ```
 
-#### Instruct the detection process.
+#### Instruct the detection process
 
 Instruct the Quark Script Agent to detect CWE-798 using the following detection process.
 
