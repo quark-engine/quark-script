@@ -1,12 +1,39 @@
-# Detect CWE-749 in Android Application (MSTG-Android-Java.apk)
+# Detect CWE-749 in Android Application
 
-This scenario seeks to find **exposed methods or functions** in the APK file. See [CWE-749](https://cwe.mitre.org/data/definitions/749.html) for more details.
+This scenario seeks to find **exposed methods or functions** in the APK
+file.
 
-Let’s use this [APK](https://github.com/OWASP/MASTG-Hacking-Playground) and the above APIs to show how Quark script find this vulnerability.
+## CWE-749 Exposed Dangerous Method or Function
 
-First, we design a detection rule `configureJsExecution.json` to spot on behavior using method `setJavascriptEnabled`. Then, we use API `methodInstance.getArguments` to check if it enables JavaScript execution on websites. Finally, we look for calls to method `addJavaScriptInterface` in the caller method. If **yes**, the APK exposes methods or functions to websites. That causes CWE-749 vulnerability.
+We analyze the definition of CWE-749 and identify its characteristics.
+
+See [CWE-749](https://cwe.mitre.org/data/definitions/749.html) for more
+details.
+
+![image](https://imgur.com/hmihGze.png)
+
+## Code of CWE-749 in MSTG-Android-Java.apk
+
+We use the
+[MSTG-Android-Java.apk](https://github.com/OWASP/MASTG-Hacking-Playground)
+sample to explain the vulnerability code of CWE-749.
+
+![image](https://imgur.com/KiA0vRD.png)
+
 ## Quark Script CWE-749.py
-```python
+
+Let's use the above APIs to show how the Quark script finds this
+vulnerability.
+
+First, we design a detection rule `configureJsExecution.json` to spot on
+behavior using the method `setJavascriptEnabled`. Then, we use the API
+`methodInstance.getArguments()` to check if it enables JavaScript
+execution on websites. Finally, we look for calls to the method
+`addJavaScriptInterface` in the caller method. If yes, the APK exposes
+dangerous methods or functions to websites. That causes CWE-749
+vulnerability.
+
+``` python
 from quark.script import runQuarkAnalysis, Rule
 
 SAMPLE_PATH = "MSTG-Android-Java.apk"
@@ -32,8 +59,10 @@ for configureJsExecution in quarkResult.behaviorOccurList:
     if enableJS and exposeAPI:
         print(f"CWE-749 is detected in method, {caller.fullName}")
 ```
+
 ## Quark Rule: configureJsExecution.json
-```json
+
+``` json
 {
     "crime": "Configure JavaScript execution on websites",
     "permission": [],
@@ -53,8 +82,10 @@ for configureJsExecution in quarkResult.behaviorOccurList:
     "label": []
 }
 ```
+
 ## Quark Script Result
-```
+
+``` TEXT
 $ python3 CWE-749.py
 
 CWE-749 is detected in method, Lsg/vp/owasp_mobile/OMTG_Android/OMTG_ENV_005_WebView_Remote; onCreate (Landroid/os/Bundle;)V

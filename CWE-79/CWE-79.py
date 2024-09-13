@@ -5,27 +5,28 @@ RULE_PATH = "loadUrlFromIntent.json"
 
 XSS_FILTERS = [
     [
-        "Lorg/owasp/esapi/Validator;", "getValidSafeHTML",
+        "Lorg/owasp/esapi/Validator;",
+        "getValidSafeHTML",
         "(Ljava/lang/String; Ljava/lang/String; I Z)Ljava/lang/String;",
     ],
     [
-        "Lorg/owasp/esapi/Encoder;", "encodeForHTML",
+        "Lorg/owasp/esapi/Encoder;",
+        "encodeForHTML",
         "(Ljava/lang/String;)Ljava/lang/String;",
     ],
     [
-        "Lorg/owasp/esapi/Encoder;", "encodeForJavaScript",
+        "Lorg/owasp/esapi/Encoder;",
+        "encodeForJavaScript",
         "(Ljava/lang/String;)Ljava/lang/String;",
     ],
     [
-        "Lorg/owasp/html/PolicyFactory;", "sanitize",
+        "Lorg/owasp/html/PolicyFactory;",
+        "sanitize",
         "(Ljava/lang/String;)Ljava/lang/String;",
     ],
 ]
 
-targetMethod = [
-    "Landroid/webkit/WebSettings;", "setJavaScriptEnabled",
-    "(Z)V"
-]
+targetMethod = ["Landroid/webkit/WebSettings;", "setJavaScriptEnabled", "(Z)V"]
 
 ruleInstance = Rule(RULE_PATH)
 quarkResult = runQuarkAnalysis(SAMPLE_PATH, ruleInstance)
@@ -40,7 +41,9 @@ for loadUrl in quarkResult.behaviorOccurList:
 
     if enableJS:
         XSSFiltersInCaller = [
-            filterAPI for filterAPI in XSS_FILTERS if quarkResult.findMethodInCaller(caller, filterAPI)
+            filterAPI
+            for filterAPI in XSS_FILTERS
+            if quarkResult.findMethodInCaller(caller, filterAPI)
         ]
 
         if not XSSFiltersInCaller:

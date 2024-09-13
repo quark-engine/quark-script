@@ -14,6 +14,6 @@ quarkResult = runQuarkAnalysis(SAMPLE_PATH, ruleInstance)
 
 for sqlCommandExecution in quarkResult.behaviorOccurList:
     if sqlCommandExecution.isArgFromMethod(
-        targetMethod
+            targetMethod
     ):
         print(f"CWE-89 is detected in {SAMPLE_PATH}")
