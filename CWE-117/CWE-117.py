@@ -9,7 +9,7 @@ quarkResult = runQuarkAnalysis(SAMPLE_PATH, ruleInstance)
 
 for logOutputBehavior in quarkResult.behaviorOccurList:
 
-    secondAPIParam = logOutputBehavior.getParamValues()[1]
+    secondAPIParam = logOutputBehavior.secondAPI.getArguments()
 
     isKeywordFound = False
     for keyword in KEYWORDS_FOR_NEUTRALIZATION:
@@ -18,4 +18,5 @@ for logOutputBehavior in quarkResult.behaviorOccurList:
             break
 
     if not isKeywordFound:
-        print(f"CWE-117 is detected in method,{secondAPIParam}")
+        caller = logOutputBehavior.methodCaller.fullName
+        print(f"CWE-117 is detected in method, {caller}")
