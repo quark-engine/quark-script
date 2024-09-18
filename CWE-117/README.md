@@ -1,27 +1,30 @@
-# Detect CWE-117 in Android Application (allsafe.apk)
-
+# Detect CWE-117 in Android Application
 
 This scenario seeks to find **Improper Output Neutralization for Logs**.
-See [CWE-117](https://cwe.mitre.org/data/definitions/117.html) for more
-details.
 
-Let's use this [APK](https://github.com/t0thkr1s/allsafe) and the above
-APIs to show how the Quark script finds this vulnerability.
+## CWE-117: Improper Output Neutralization for Logs
 
-First, we design a detection rule `writeContentToLog.json` to spot on
-behavior using the method that writes contents to the log file.
+We analyze the definition of CWE-117 and identify its characteristics.
 
-Then, we use `methodInstance.getArguments()` to get all parameter values
-of this method. And we check if these parameters contain keywords of
-APIs for neutralization, such as `escape`, `replace`, `format`, and
-`setFilter`.
+See [CWE-117](https://cwe.mitre.org/data/definitions/117.html) for more details.
 
-If the answer is **YES**, that may result in secret context leakage into
-the log file, or the attacker may perform log forging attacks.
+![image](https://imgur.com/poFP2Py.jpg)
+
+## Code of CWE-117 in allsafe.apk
+
+We use the [allsafe.apk](https://github.com/t0thkr1s/allsafe) sample to explain the vulnerability code of CWE-117.
+
+![image](https://imgur.com/AgCpFzr.jpg)
 
 ## Quark Script CWE-117.py
 
-``` python
+First, we design a detection rule ``writeContentToLog.json`` to spot on behavior using the method that writes contents to the log file.
+
+Then, we use ``methodInstance.getArguments()`` to get all parameter values of this method. And we check if these parameters contain keywords of APIs for neutralization, such as ``escape``, ``replace``, ``format``, and ``setFilter``.
+
+If the answer is **YES**, that may result in secret context leakage into the log file, or the attacker may perform log forging attacks.
+
+```python
 from quark.script import Rule, runQuarkAnalysis
 
 SAMPLE_PATH = "allsafe.apk"
@@ -48,7 +51,7 @@ for logOutputBehavior in quarkResult.behaviorOccurList:
 
 ## Quark Rule: writeContentToLog.json
 
-``` json
+```json
 {
     "crime": "Write contents to the log.",
     "permission": [],
@@ -71,9 +74,7 @@ for logOutputBehavior in quarkResult.behaviorOccurList:
 
 ## Quark Script Result
 
--   **allsafe.apk**
-
-``` TEXT
+```TEXT
 $ python CWE-117.py
 CWE-117 is detected in method, Linfosecadventures/allsafe/challenges/InsecureLogging; lambda$onCreateView$0 (Lcom/google/android/material/textfield/TextInputEditText; Landroid/widget/TextView; I Landroid/view/KeyEvent;)Z
 ```
