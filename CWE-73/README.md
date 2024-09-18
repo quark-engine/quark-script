@@ -1,15 +1,44 @@
-# Detect  CWE-73 in Android Application (ovaa.apk)
+# Detect CWE-73 in Android Application
 
-This scenario seeks to find **External Control of File Name or Path**. See [CWE-73](https://cwe.mitre.org/data/definitions/73.html)  for more details.
+This scenario seeks to find **External Control of File Name or Path** in
+the APK file.
 
-First, we design a detection rule `accessFileInExternalDir.json` to spot behavior accessing a file in an external directory.
+## CWE-73 External Control of File Name or Path
 
-Second, we use API `methodInstance.getArguments()` to get the argument for the file path and use `quarkResultInstance.isHardcoded(argument)` to check if the argument is hardcoded into the APK. If **No**, the argument is from external input.
+We analyze the definition of CWE-73 and identify its characteristics.
 
-Finally, we use Quark API `quarkResultInstance.findMethodInCaller(callerMethod, targetMethod)`  to check if any APIs in the caller method for opening files. If **YES**, the APK performs file operations using external input as a path, which may cause CWE-73 vulnerability.
+See [CWE-73](https://cwe.mitre.org/data/definitions/73.html) for more
+details.
 
-## Quark Script CWE-73.py
-```python
+![image](https://imgur.com/ES7xg5X.png)
+
+## Code of CWE-73 in ovaa.apk
+
+We use the [ovaa.apk](https://github.com/oversecured/ovaa) sample to
+explain the vulnerability code of CWE-73.
+
+![image](https://imgur.com/9oa1HIC.png)
+
+## Quark Script: CWE-73.py
+
+Let's use the above APIs to show how Quark script find this
+vulnerability.
+
+First, we design a detection rule `accessFileInExternalDir.json` to spot
+behavior accessing a file in an external directory.
+
+Second, we use API `methodInstance.getArguments()` to get the argument
+for the file path and use `quarkResultInstance.isHardcoded(argument)` to
+check if the argument is hardcoded into the APK. If **No**, the argument
+is from external input.
+
+Finally, we use Quark API
+`quarkResultInstance.findMethodInCaller(callerMethod, targetMethod)` to
+check if any APIs in the caller method for opening files. If **YES**,
+the APK performs file operations using external input as a path, which
+may cause CWE-73 vulnerability.
+
+``` python
 from quark.script import runQuarkAnalysis, Rule
 
 SAMPLE_PATH = "ovaa.apk"
@@ -35,9 +64,11 @@ for accessExternalDir in quarkResult.behaviorOccurList:
 
     if result:
         print("CWE-73 is detected in method, ", caller.fullName)
-```  
+```
+
 ## Quark Rule: accessFileInExternalDir.json
-```json
+
+``` json
 {
     "crime": "Access a file in an external directory",
     "permission": [],
@@ -57,8 +88,10 @@ for accessExternalDir in quarkResult.behaviorOccurList:
     "label": []
 }
 ```
+
 ## Quark Script Result
-```
+
+``` TEXT
 $ python CWE-73.py
 CWE-73 is detected in method, Loversecured/ovaa/providers/TheftOverwriteProvider; openFile (Landroid/net/Uri; Ljava/lang/String;)Landroid/os/ParcelFileDescriptor;
 ```
