@@ -1,5 +1,5 @@
 from quark.script.frida import runFridaHook
-from quark.script.ciphey import checkClearText
+from quark.script.ares import checkClearText
 
 APP_PACKAGE_NAME = "oversecured.ovaa"
 

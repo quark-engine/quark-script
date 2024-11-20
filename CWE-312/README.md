@@ -28,12 +28,12 @@ vulnerability.
 First, we designed a [Frida](https://frida.re) script `agent.js` to hook
 the target method and get the arguments when the target method is
 called. Then we hook the method `putString` to catch its arguments.
-Finally, we use [Ciphey](https://github.com/Ciphey/Ciphey) to check if
+Finally, we use [Ares](https://github.com/bee-san/Ares) to check if
 the arguments are encrypted.
 
 ``` python
 from quark.script.frida import runFridaHook
-from quark.script.ciphey import checkClearText
+from quark.script.ares import checkClearText
 
 APP_PACKAGE_NAME = "oversecured.ovaa"
 
