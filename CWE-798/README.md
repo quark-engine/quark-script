@@ -1,36 +1,35 @@
 # Detect CWE-798 in Android Application
 
-This scenario seeks to find hard-coded credentials in the APK file.
+This scenario seeks to find **hard-coded credentials** in the APK file.
 
-## CWE-798 Use of Hard-coded Credentials
+## CWE-798: Use of Hard-coded Credentials
 
 We analyze the definition of CWE-798 and identify its characteristics.
 
-See [CWE-798](https://cwe.mitre.org/data/definitions/798.html) for more
-details.
+See [CWE-798](https://cwe.mitre.org/data/definitions/798.html) for more details.
 
-![image](https://i.imgur.com/0G9APpf.jpg)
+![image](https://imgur.com/rF8J8hE.png)
 
 ## Code of CWE-798 in ovaa.apk
 
-We use the [ovaa.apk](https://github.com/oversecured/ovaa) sample to
-explain the vulnerability code of CWE-798.
+We use the [ovaa.apk](https://github.com/oversecured/ovaa) sample to explain the vulnerability code of CWE-798.
 
-![image](https://i.imgur.com/ikaJlDW.jpg)
+![image](https://imgur.com/Cg7DacP.png)
+
+
+## CWE-798 Detection Process Using Quark Script API
+
+![image](https://imgur.com/R8CfDqD.png)
+
+Let’s use the above APIs to show how the Quark script finds this vulnerability.
+
+First, we design a detection rule ``findSecretKeySpec.json`` to spot on behavior using the constructor ``SecretKeySpec``. Second, we get all the parameter values from this constructor. Then, we parse the AES key from the parameter values. Finally, we check if the AES key is hardcoded in the APK file. If the answer is **YES**, BINGO!!! We find hard-coded credentials in the APK file.
 
 ## Quark Script: CWE-798.py
 
-Let\'s use the above APIs to show how the Quark script finds this
-vulnerability.
+![image](https://imgur.com/IOyrqDc.png)
 
-First, we design a detection rule `findSecretKeySpec.json` to spot on
-behavior using the method `SecretKeySpec`. Then, we get all the
-parameter values that are input to this method. And we parse the AES key
-out of the parameter values. Finally, we check if the AES key is
-hardcoded in the APK file. If the answer is YES, BINGO!!! We find
-hard-coded credentials in the APK file.
-
-``` python
+```python
 import re
 from quark.script import runQuarkAnalysis, Rule
 
@@ -54,7 +53,9 @@ for secretKeySpec in quarkResult.behaviorOccurList:
 
 ## Quark Rule: findSecretKeySpec.json
 
-``` json
+![image](https://imgur.com/2BYOE70.png)
+
+```json
 {
     "crime": "Detect APK using SecretKeySpec.",
     "permission": [],
@@ -77,8 +78,7 @@ for secretKeySpec in quarkResult.behaviorOccurList:
 
 ## Quark Script Result
 
-``` TEXT
-$ python3 findSecretKeySpec.py 
-
+```TEXT
+$ python3 CWE-798.py
 Found hard-coded AES key 49u5gh249gh24985ghf429gh4ch8f23f
 ```
