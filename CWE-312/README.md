@@ -1,36 +1,37 @@
 # Detect CWE-312 in Android Application
 
-This scenario seeks to find **cleartext storage of sensitive data** in the APK file.
 
-## CWE-312: Cleartext Storage of Sensitive Information
+This scenario seeks to find **cleartext storage of sensitive data** in
+the APK file.
+
+## CWE-312 Cleartext Storage of Sensitive Information
 
 We analyze the definition of CWE-312 and identify its characteristics.
 
-See [CWE-312](https://cwe.mitre.org/data/definitions/312.html) for more details.
+See [CWE-312](https://cwe.mitre.org/data/definitions/312.html) for more
+details.
 
-![image](https://imgur.com/mD2uXUy.jpg)
+![image](https://i.imgur.com/cy2EiZx.jpg)
 
 ## Code of CWE-312 in ovaa.apk
 
-We use the [ovaa.apk](https://github.com/oversecured/ovaa) sample to explain the vulnerability code of CWE-312.
+We use the [ovaa.apk](https://github.com/oversecured/ovaa) sample to
+explain the vulnerability code of CWE-312.
 
-![image](https://imgur.com/MfnYIYy.jpg)
+![image](https://i.imgur.com/KsFsxTu.jpg)
 
-## CWE-312 Detection Process Using Quark Script API
+## Quark Script CWE-312.py
 
-Let’s use the above APIs to show how the Quark script finds this vulnerability.
+Let\'s use the above APIs to show how the Quark script finds this
+vulnerability.
 
-We have designed a [Frida](https://frida.re/) script ``agent.js`` to hook a specified method and get the arguments when the method is called. It can be found in [quark-engine/quark/script/frida](https://github.com/quark-engine/quark-engine/tree/master/quark/script/frida).
- 
-To begin with, we hook the method ``putString`` to catch its arguments. Then, we check if sensitive information like email or password is passed. Finally, we use ``checkClearText`` imported from [Ares](https://github.com/bee-san/Ares) to check if the arguments are cleartext. If both **YES**, CWE-312 vulnerability might be caused.
+First, we designed a [Frida](https://frida.re) script `agent.js` to hook
+the target method and get the arguments when the target method is
+called. Then we hook the method `putString` to catch its arguments.
+Finally, we use [Ares](https://github.com/bee-san/Ares) to check if
+the arguments are encrypted.
 
-![image](https://imgur.com/eNjm3ES.jpg)
-
-## Quark Script: CWE-312.py
-
-![image](https://imgur.com/rxMPZX8.jpg)
-
-```python
+``` python
 from quark.script.frida import runFridaHook
 from quark.script.ares import checkClearText
 
@@ -61,7 +62,7 @@ for putString in fridaResult.behaviorOccurList:
 
 ## Frida Script: agent.js
 
-```javascript
+``` javascript
 // -*- coding: utf-8 -*-
 // This file is part of Quark-Engine - https://github.com/quark-engine/quark-engine
 // See the file 'LICENSE' for copying permission.
@@ -124,7 +125,7 @@ rpc.exports["watchMethodCall"] = (classAndMethodName, methodParamTypes) => watch
 
 ## Quark Script Result
 
-```TEXT
+``` TEXT
 $ python3 CWE-312.py
 The CWE-312 vulnerability is found. The cleartext is "test@email.com"
 The CWE-312 vulnerability is found. The cleartext is "password"
