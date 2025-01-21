@@ -57,7 +57,7 @@ jobs:
         git clone "https://github.com/quark-engine/apk-samples.git"
         mv -vn $GITHUB_WORKSPACE/CWE-*/CWE-*.py test_ground/
         mv -vn $GITHUB_WORKSPACE/CWE-*/*.json test_ground/
-        mv -vn $GITHUB_WORKSPACE/CWE-*/*.js test_ground/
+        # mv -vn $GITHUB_WORKSPACE/CWE-*/*.js test_ground/
         mv -vn ./apk-samples/vulnerable-samples/*.apk test_ground/
     
     
@@ -74,4 +74,3 @@ jobs:
             echo $line
           fi
         done
-
