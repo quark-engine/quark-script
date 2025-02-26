@@ -1,42 +1,40 @@
 # Detect CWE-78 in Android Application
 
-This scenario seeks to find **Improper Neutralization of Special
-Elements used in an OS Command** in the APK file.
+This scenario seeks to find **Improper Neutralization of Special Elements used in an OS Command** in the APK file.
 
-## CWE-78 Improper Neutralization of Special Elements used in an OS Command (\'OS Command Injection\')
+## CWE-78 Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')
 
 We analyze the definition of CWE-78 and identify its characteristics.
 
-See [CWE-78](https://cwe.mitre.org/data/definitions/78.html) for more
-details.
+See [CWE-78](https://cwe.mitre.org/data/definitions/78.html) for more details.
 
-![image](https://imgur.com/aUB195P.png)
+![image](https://imgur.com/HpMGGsO.png)
 
 ## Code of CWE-78 in Vuldroid.apk
 
-We use the [Vuldroid.apk](https://github.com/jaiswalakshansh/Vuldroid)
-sample to explain the vulnerability code of CWE-78.
+We use the [Vuldroid.apk](https://github.com/jaiswalakshansh/Vuldroid) sample to explain the vulnerability code of CWE-78.
 
-![image](https://imgur.com/hO6m3Bz.png)
+![image](https://imgur.com/7Tu0Y3H.png)
+
+## CWE-78 Detection Process Using Quark Script API
+
+![image](https://imgur.com/Hi7qGjw.png)
+
+Let’s use the above APIs to show how the Quark script finds this vulnerability.
+
+First, we design a detection rule `ExternalStringsCommands.json` to spot on behavior using external strings as commands.
+
+Next, we use Quark API `behaviorInstance.getMethodsInArgs()` to get the methods that passed the external command.
+
+Then we check if the method neutralizes any special elements in the argument.
+
+If the neutralization is not complete, then it may cause CWE-78 vulnerability.
 
 ## Quark Script: CWE-78.py
 
-Let's use the above APIs to show how the Quark script finds this
-vulnerability.
+![image](https://imgur.com/UpRWgGe.png)
 
-First, we design a detection rule `ExternalStringsCommands.json` to spot
-on behavior using external strings as commands.
-
-Next, we use Quark API `behaviorInstance.getMethodsInArgs()` to get the
-methods that passed the external command.
-
-Then we check if the method neutralizes any special elements found in
-the argument.
-
-If the neutralization is not complete, then it may cause CWE-78
-vulnerability.
-
-``` python
+```python
 from quark.script import runQuarkAnalysis, Rule, findMethodInAPK
 
 SAMPLE_PATH = "Vuldroid.apk"
@@ -48,7 +46,11 @@ STRING_MATCHING_API = set([
     ("Ljava/lang/String;", "indexOf", "(I)I"),
     ("Ljava/lang/String;", "indexOf", "(Ljava/lang/String;)I"),
     ("Ljava/lang/String;", "matches", "(Ljava/lang/String;)Z"),
-    ("Ljava/lang/String;", "replaceAll", "(Ljava/lang/String; Ljava/lang/String;)Ljava/lang/String;")
+    (
+        "Ljava/lang/String;",
+        "replaceAll",
+        "(Ljava/lang/String; Ljava/lang/String;)Ljava/lang/String;",
+    ),
 ])
 
 specialElementsPattern = r"[ ;|,>`]+"
@@ -69,10 +71,12 @@ for ExternalStringCommand in quarkResult.behaviorOccurList:
     else:
         print(f"CWE-78 is detected in method, {caller.fullName}")
 ```
-
+        
 ## Quark Rule: ExternalStringCommand.json
 
-``` json
+![image](https://imgur.com/eoV8hnZ.png)
+
+```json
 {
     "crime": "Using external strings as commands",
     "permission": [],
@@ -95,9 +99,7 @@ for ExternalStringCommand in quarkResult.behaviorOccurList:
 
 ## Quark Script Result
 
--   **Vuldroid.apk**
-
-``` TEXT
+```
 $ python3 CWE-78.py
 CWE-78 is detected in method, Lcom/vuldroid/application/RootDetection; onCreate (Landroid/os/Bundle;)V
 ```
