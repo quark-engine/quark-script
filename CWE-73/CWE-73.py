@@ -1,7 +1,7 @@
 from quark.script import runQuarkAnalysis, Rule
 
 SAMPLE_PATH = "ovaa.apk"
-RULE_PATH = "accessFileInExternalDir.json"
+RULE_PATH = "useLastPathSegmentAsFileName.json"
 
 OPEN_FILE_API = [
     "Landroid/os/ParcelFileDescriptor;",                   # Class name

@@ -1,11 +1,11 @@
 {
-    "crime": "Access a file in an external directory",
+    "crime": "Use the last path segment as the file name",
     "permission": [],
     "api": [
         {
-            "class": "Landroid/os/Environment;",
-            "method": "getExternalStorageDirectory",
-            "descriptor": "()Ljava/io/File;"
+            "class": "Landroid/net/Uri;",
+            "method": "getLastPathSegment",
+            "descriptor": "()Ljava/lang/String;"
         },
         {
             "class": "Ljava/io/File;",
@@ -16,4 +16,3 @@
     "score": 1,
     "label": []
 }
-
