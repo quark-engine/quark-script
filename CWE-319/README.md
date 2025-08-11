@@ -1,38 +1,36 @@
 # Detect CWE-319 in Android Application
 
-
-This scenario seeks to find **Cleartext Transmission of Sensitive
-Information** in the APK file.
+This scenario seeks to find **Cleartext Transmission of Sensitive Information** in the APK file.
 
 ## CWE-319 Cleartext Transmission of Sensitive Information
 
 We analyze the definition of CWE-319 and identify its characteristics.
 
-See [CWE-319](https://cwe.mitre.org/data/definitions/319.html) for more
-details.
+See [CWE-319](https://cwe.mitre.org/data/definitions/319.html) for more details.
 
-![image](https://imgur.com/tk8rtYf.jpg)
+![image](https://imgur.com/hjEYP5b.jpg)
 
 ## Code of CWE-319 in ovaa.apk
 
-We use the [ovaa.apk](https://github.com/oversecured/ovaa) sample to
-explain the vulnerability code of CWE-319.
+We use the [ovaa.apk](https://github.com/oversecured/ovaa) sample to explain the vulnerability code of CWE-319.
 
-![image](https://imgur.com/Ew4UOAR.jpg)
+![image](https://imgur.com/wCYfTNx.jpg)
+
+## CWE-319 Detection Process Using Quark Script API
+
+![image](https://imgur.com/H1FgUtE.jpg)
+
+Let’s use the above APIs to show how the Quark script finds this vulnerability. This sample uses the package `Retrofit` to request Web APIs, but the APIs use cleartext protocols.
+
+We first design a detection rule `setRetrofitBaseUrl.json` to spot on behavior that sets the base URL of the Retrofit instance. Then, we loop through a custom list of cleartext protocol schemes and use API `behaviorInstance.hasString(pattern, isRegex)` to filter if there are arguments that are URL strings with cleartext protocol.
+
+If the answer is **YES**, CWE-319 vulnerability is caused.
 
 ## Quark Script: CWE-319.py
 
-Let\'s use the above APIs to show how the Quark script finds this
-vulnerability. This sample uses the package Retrofit to request Web
-APIs, but the APIs use cleartext protocols.
+![image](https://imgur.com/CktArDJ.jpg)
 
-We first design a detection rule `setRetrofitBaseUrl.json` to spot on
-behavior that sets the base URL of the Retrofit instance. Then, we loop
-through a custom list of cleartext protocol schemes and use API
-`behaviorInstance.hasString(pattern, isRegex)` to filter arguments that
-are URL strings with cleartext protocol.
-
-``` python
+```python
 from quark.script import runQuarkAnalysis, Rule
 
 SAMPLE_PATH = "./ovaa.apk"
@@ -62,7 +60,9 @@ for setRetrofitBaseUrl in quarkResult.behaviorOccurList:
 
 ## Quark Rule: setRetrofitBaseUrl.json
 
-``` json
+![image](https://imgur.com/751Dhce.jpg)
+
+```json
 {
     "crime": "Set Retrofit Base Url",
     "permission": [],
@@ -86,7 +86,7 @@ for setRetrofitBaseUrl in quarkResult.behaviorOccurList:
 
 ## Quark Script Result
 
-``` TEXT
+```TEXT
 $ python3 CWE-319.py
 CWE-319 detected!
 Here are the found URLs with cleartext protocol:

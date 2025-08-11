@@ -1,36 +1,34 @@
 # Detect CWE-328 in Android Application
 
-
-This scenario seeks to find **the use of weak Hash**.
+This scenario seeks to find the **Use of Weak Hash**.
 
 ## CWE-328 Use of Weak Hash
 
 We analyze the definition of CWE-328 and identify its characteristics.
 
-See [CWE-328](https://cwe.mitre.org/data/definitions/328.html) for more
-details.
+See [CWE-328](https://cwe.mitre.org/data/definitions/328.html) for more details.
 
-![image](https://imgur.com/1jkGcSq.png)
+![image](https://imgur.com/DUaOaKi.jpg)
 
 ## Code of CWE-328 in allsafe.apk
 
-We use the [allsafe.apk](https://github.com/t0thkr1s/allsafe) sample to
-explain the vulnerability code of CWE-328.
+We use the [allsafe.apk](https://github.com/t0thkr1s/allsafe) sample to explain the vulnerability code of CWE-328.
 
-![image](https://imgur.com/b0yFDht.png)
+![image](https://imgur.com/nyreKX2.jpg)
+
+## CWE-328 Detection Process Using Quark Script API
+
+![image](https://imgur.com/bM7WJKo.jpg)
+
+Let's use the above APIs to show how the Quark script finds this vulnerability.
+
+First, we use API `findMethodInAPK(samplePath, targetMethod)` to find the method `MessageDigest.getInstance()` or `SecretKeyFactory.getInstance()`. Next, we use API `methodInstance.getArguments()` with a list to check if the method uses weak hashing algorithms. If **YES**, that causes CWE-328 vulnerability.
 
 ## Quark Script: CWE-328.py
 
-Let's use the above APIs to show how the Quark script finds this
-vulnerability.
+![image](https://imgur.com/wb9Baa3.jpg)
 
-First, we use API `findMethodInAPK(samplePath, targetMethod)` to find
-the method `MessageDigest.getInstance()` or
-`SecretKeyFactory.getInstance()`. Next, we use API
-`methodInstance.getArguments()` with a list to check if the method uses
-weak hashing algorithms. If **YES**, that causes CWE-328 vulnerability.
-
-``` python
+```python
 from quark.script import findMethodInAPK
 
 SAMPLE_PATH = "./allsafe.apk"
@@ -75,7 +73,7 @@ for setHashAlgo in methodsFound:
 
 ## Quark Script Result
 
-``` TEXT
+```TEXT
 $ python3 CWE-328.py
 CWE-328 is detected in ./allsafe.apk,
         and it occurs in method, Linfosecadventures/allsafe/challenges/SQLInjection; md5 (Ljava/lang/String;)Ljava/lang/String;

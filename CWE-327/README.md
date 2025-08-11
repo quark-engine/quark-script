@@ -1,36 +1,34 @@
 # Detect CWE-327 in Android Application
 
-This scenario seeks to find **Use of a Broken or Risky Cryptographic
-Algorithm** in the APK file.
+This scenario seeks to find **Use of a Broken or Risky Cryptographic Algorithm** in the APK file.
 
-# CWE-327 Use of a Broken or Risky Cryptographic Algorithm
+## CWE-327 Use of a Broken or Risky Cryptographic Algorithm
 
 We analyze the definition of CWE-327 and identify its characteristics.
 
-See [CWE-327](https://cwe.mitre.org/data/definitions/327.html) for more
-details.
+See [CWE-327](https://cwe.mitre.org/data/definitions/327.html) for more details.
 
-![image](https://imgur.com/VlX7MTc.png)
+![image](https://imgur.com/Xfm5C9K.jpg)
 
 ## Code of CWE-327 in InjuredAndroid.apk
 
-We use the [InjuredAndroid.apk](https://github.com/B3nac/InjuredAndroid)
-sample to explain the vulnerability code of CWE-327.
+We use the [InjuredAndroid.apk](https://github.com/B3nac/InjuredAndroid) sample to explain the vulnerability code of CWE-327.
 
-![image](https://imgur.com/XFvu8zb.png)
+![image](https://imgur.com/R5zkGt2.jpg)
+
+## CWE-327 Detection Process Using Quark Script API
+
+![image](https://imgur.com/2owB5Z7.jpg)
+
+Let’s use the above APIs to show how the Quark script finds this vulnerability.
+
+We first design a detection rule `useOfCryptographicAlgo.json` to spot on behavior using cryptographic algorithms. Then, we use API `behaviorInstance.hasString(pattern, isRegex)` with a list to check if the algorithm is risky. If **YES**, that may cause the exposure of sensitive data.
 
 ## Quark Script CWE-327.py
 
-Let's use the above APIs to show how the Quark script finds this
-vulnerability.
+![image](https://imgur.com/4fa3yS0.jpg)
 
-We first design a detection rule `useOfCryptographicAlgo.json` to spot
-on behavior using cryptographic algorithms. Then, we use API
-`behaviorInstance.hasString(pattern, isRegex)` with a list to check if
-the algorithm is risky. If YES, that may cause the exposure of sensitive
-data.
-
-``` python
+```python
 from quark.script import runQuarkAnalysis, Rule
 
 SAMPLE_PATH = "InjuredAndroid.apk"
@@ -52,7 +50,9 @@ for useCryptoAlgo in quarkResult.behaviorOccurList:
 
 ## Quark Rule: useOfCryptographicAlgo.json
 
-``` json
+![image](https://imgur.com/rjRykWM.jpg)
+
+```json
 {
     "crime": "Use of cryptographic algorithm",
     "permission": [],
@@ -75,7 +75,7 @@ for useCryptoAlgo in quarkResult.behaviorOccurList:
 
 ## Quark Script Result
 
-``` TEXT
+```TEXT
 $ python3 CWE-327.py
 CWE-327 is detected in method, Lb3nac/injuredandroid/k; b (Ljava/lang/String;)Ljava/lang/String;
 CWE-327 is detected in method, Lb3nac/injuredandroid/k; a (Ljava/lang/String;)Ljava/lang/String;
