@@ -1,27 +1,36 @@
-# Detect CWE-532 in Android Application (dvba.apk)
+# Detect CWE-532 in Android Application
 
-This scenario seeks to find **insertion of sensitive information into
-Log file**. See
-[CWE-532](https://cwe.mitre.org/data/definitions/532.html) for more
-details.
+This scenario seeks to find **insertion of sensitive information into Log file** in the APK file.
 
-Let's use this
-[APK](https://github.com/rewanthtammana/Damn-Vulnerable-Bank) and the
-above APIs to show how the Quark script finds this vulnerability.
+## CWE-532: Insertion of Sensitive Information into Log File
 
-First, we use API `findMethodInAPK(samplePath, targetMethod)` to locate
-`log.d` method. Then we use API `methodInstance.getArguments()` to get
-the argument that input to `log.d`. Finally, we use some keywords such
-as \"token\", \"password\", and \"decrypt\" to check if arguments
-include sensitive data. If the answer is YES, that may cause sensitive
-data leakage into log file.
+We analyze the definition of CWE-532 and identify its characteristics.
 
-You can use your own keywords in the keywords list to detect sensitive
-data.
+See [CWE-532](https://cwe.mitre.org/data/definitions/532.html) for more details.
 
-## Quark Script CWE-532.py
+![image](https://imgur.com/6WzpyId.jpg)
 
-``` python
+## Code of CWE-532 in dvba.apk
+
+We use the [dvba.apk](https://github.com/rewanthtammana/Damn-Vulnerable-Bank)  sample to explain the vulnerability code of CWE-532.
+
+![image](https://imgur.com/cLzBvh2.jpg)
+
+## CWE-532 Detection Process Using Quark Script API
+
+![image](https://imgur.com/KLbnflF.jpg)
+
+Let's use the above APIs to show how the Quark script finds this vulnerability.
+
+First, we use the API ``findMethodInAPK(samplePath, targetMethod)`` to locate ``log.d`` method. Then we use API ``methodInstance.getArguments()`` to get the argument that input to ``log.d``. Finally, we use some keywords such as "token", "password", and "decrypt" to check if arguments include sensitive data. If the answer is **YES**, that may cause sensitive data leakage into log file.
+
+You can use your own keywords in the keywords list to detect sensitive data.
+
+## Quark Script: CWE-532.py
+
+![image](https://imgur.com/L9Ciqlp.jpg)
+
+```python
 from quark.script import findMethodInAPK
 
 SAMPLE_PATH = "dvba.apk"
@@ -48,7 +57,7 @@ for debugLogger in methodsFound:
 
 ## Quark Script Result
 
-``` TEXT
+```TEXT
 $ python CWE-532.py
 CWE-532 is detected in method, Lcom/google/firebase/auth/FirebaseAuth; d (Lc/c/b/h/o;)V
 ```
