@@ -1,0 +1,18 @@
+{
+    "crime": "Initialize a cipher object with IV",
+    "permission": [],
+    "api": [
+        {
+            "class": "Ljavax/crypto/spec/IvParameterSpec;",
+            "method": "<init>",
+            "descriptor": "([B)V"
+        },
+        {
+            "class": "Ljavax/crypto/Cipher;",
+            "method": "init",
+            "descriptor": "(ILjava/security/Key;Ljava/security/spec/AlgorithmParameterSpec;)V"
+        }
+    ],
+    "score": 1,
+    "label": []
+}
