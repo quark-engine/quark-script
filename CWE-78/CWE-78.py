@@ -9,7 +9,11 @@ STRING_MATCHING_API = set([
     ("Ljava/lang/String;", "indexOf", "(I)I"),
     ("Ljava/lang/String;", "indexOf", "(Ljava/lang/String;)I"),
     ("Ljava/lang/String;", "matches", "(Ljava/lang/String;)Z"),
-    ("Ljava/lang/String;", "replaceAll", "(Ljava/lang/String; Ljava/lang/String;)Ljava/lang/String;")
+    (
+        "Ljava/lang/String;",
+        "replaceAll",
+        "(Ljava/lang/String; Ljava/lang/String;)Ljava/lang/String;",
+    ),
 ])
 
 specialElementsPattern = r"[ ;|,>`]+"
