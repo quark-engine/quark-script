@@ -20,7 +20,7 @@ We use the [pivaa.apk](https://github.com/htbridge/pivaa) sample to explain the 
 
 ![image](https://i.postimg.cc/ryYJRWGN/image.png)
 
-First, we use API ``findMethodImpls(samplePath, abstractMethod)`` to locate the method that implements the hostname verification, which verifies the hostname of a certificate.
+First, we use API ``findMethodImpls(samplePath, targetMethod)`` to locate the method that implements the hostname verification, which verifies the hostname of a certificate.
 
 Next, we use API ``isMethodReturnAlwaysTrue(samplePath, targetMethod)`` to check if the method always returns true.
 
