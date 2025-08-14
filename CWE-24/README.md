@@ -28,7 +28,7 @@ Next, we use ``methodInstance.getArguments()`` to retrieve the file path argumen
 
 Finally, we use the Quark Script API ``quarkResultInstance.findMethodInCaller(callerMethod, targetMethod)`` to search for any APIs in the caller method that are used to match strings, and `getParamValues(none)` to retrieve the parameters.
 
-If no API is found or `"../"` is not in the parameters, that implies the APK does not neutralize the special element `../` within the argument, possibly resulting in CWE-24 vulnerability.
+If no API is found or `"../"` is not in parameters, that implies the APK does not neutralize the special element `../` within the argument, possibly resulting in CWE-24 vulnerability.
 
 ## Quark Script: CWE-24.py
 
