@@ -3,7 +3,7 @@ from quark.script import runQuarkAnalysis, Rule
 SAMPLE_PATH = "ovaa.apk"
 RULE_PATH = "LoadUrlFromIntent.json"
 
-INTENT_SETTING_METHODS = [
+URL_GETTING_METHODS = [
     "findViewById",
     "getStringExtra",
     "getIntent",
@@ -19,9 +19,9 @@ for behaviorInstance in quarkResult.behaviorOccurList:
     verifiedMethodCandidates = []
 
     for method in methodsInArgs:
-        if method.methodName not in INTENT_SETTING_METHODS:
+        if method.methodName not in URL_GETTING_METHODS:
             verifiedMethodCandidates.append(method)
 
     if verifiedMethodCandidates == []:
         caller = behaviorInstance.methodCaller.fullName
-        print(f"cwe-940 is detected in method, {caller}")
+        print(f"CWE-940 is detected in method, {caller}")
