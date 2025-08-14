@@ -4,13 +4,14 @@ SAMPLE_PATH = "insecureShop.apk"
 TARGET_METHOD = [
     "Landroid/webkit/SslErrorHandler;",  # class name
     "proceed",                           # method name
-    "()V"                                # descriptor
+    "()V",                               # descriptor
 ]
 OVERRIDDEN_METHOD = [
     "Landroid/webkit/WebViewClient;",    # class name
     "onReceivedSslError",                # method name
-    "(Landroid/webkit/WebView;" + " Landroid/webkit/SslErrorHandler;" + \
-    " Landroid/net/http/SslError;)V"     # descriptor
+    "(Landroid/webkit/WebView;"
+    + " Landroid/webkit/SslErrorHandler;"
+    + " Landroid/net/http/SslError;)V",  # descriptor
 ]
 
 for sslProceedCaller in findMethodInAPK(SAMPLE_PATH, TARGET_METHOD):
