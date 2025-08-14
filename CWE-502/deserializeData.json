@@ -12,7 +12,7 @@
             "class": "Ljava/io/ObjectInputStream;",
             "method": "readObject",
             "descriptor": "()Ljava/lang/Object;"
-        }  
+        }
 
     ],
     "score": 1,
