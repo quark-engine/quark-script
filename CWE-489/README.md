@@ -1,28 +1,32 @@
-# Detect CWE-489 in Android Application (allsafe.apk, AndroGoat.apk, pivaa.apk)
+# Detect CWE-489 in Android Application
 
+This scenario seeks to find **active debug code**.
 
-This scenario seeks to find **active debug code** in the APK file. See
-[CWE-489](https://cwe.mitre.org/data/definitions/489.html) for more
-details.
+## CWE-489: Active Debug Code
 
-Let\'s use [allsafe.apk](https://github.com/t0thkr1s/allsafe),
-[AndroGoat.apk](https://github.com/satishpatnayak/AndroGoat),
-[pivaa.apk](https://github.com/HTBridge/pivaa), and the above APIs to
-show how the Quark script finds this vulnerability.
+We analyze the definition of CWE-489 and identify its characteristics.
 
-First, we use Quark API `getApplication(samplePath)` to get the
-application element in the manifest file. Then we use
-`applicationInstance.isDebuggable()` to check if the application element
-sets the attribute `android:debuggable` to true. If **Yes**, that causes
-CWE-489 vulnerabilities.
+See [CWE-489](https://cwe.mitre.org/data/definitions/489.html) for more details.
+
+![image](https://imgur.com/UuDNFXW.jpg)
+
+## Code of CWE-489 in allsafe.apk
+
+We use the [allsafe.apk](https://github.com/t0thkr1s/allsafe) sample to explain the vulnerability code of CWE-489.
+
+![image](https://imgur.com/QSrATmt.jpg)
+
+## CWE-489 Detection Process Using Quark Script API
+
+![image](https://imgur.com/ydGfkV4.jpg)
+
+First, we use Quark API ``getApplication(samplePath)`` to get the application element in the manifest file. Then we use ``applicationInstance.isDebuggable()`` to check if the application element sets the attribute ``android:debuggable`` to true. If **Yes**, that causes CWE-489 vulnerabilities.
 
 ## Quark Script CWE-489.py
 
-The Quark Script below uses allsafe.apk to demonstrate. You can change
-the `SAMPLE_PATH` to the sample you want to detect. For example,
-`SAMPLE_PATH = AndroGoat.apk` or `SAMPLE_PATH = pivaa.apk`.
+![image](https://imgur.com/ToCAmD3.jpg)
 
-``` python
+```python
 from quark.script import getApplication
 
 SAMPLE_PATH = "allsafe.apk"
@@ -33,23 +37,7 @@ if getApplication(SAMPLE_PATH).isDebuggable():
 
 ## Quark Script Result
 
--   **allsafe.apk**
-
-``` TEXT
+```TEXT
 $ python3 CWE-489.py
-CWE-489 is detected in allsafe.apk
-```
-
--   **AndroGoat.apk**
-
-``` TEXT
-$ python3 CWE-489.py
-CWE-489 is detected in AndroGoat.apk
-```
-
--   **pivaa.apk**
-
-``` TEXT
-$ python3 CWE-489.py
-CWE-489 is detected in pivaa.apk
+CWE-489 is detected in allsafe.apk.
 ```

@@ -13,6 +13,7 @@ quarkResult = runQuarkAnalysis(SAMPLE_PATH, ruleInstance)
 
 for usePRNGMethod in quarkResult.behaviorOccurList:
     for prngCaller in usePRNGMethod.methodCaller.getXrefFrom():
-        if any(keyword in prngCaller.fullName
-               for keyword in CREDENTIAL_KEYWORDS):
+        if any(
+            keyword in prngCaller.fullName for keyword in CREDENTIAL_KEYWORDS
+        ):
             print("CWE-338 is detected in %s" % prngCaller.fullName)
