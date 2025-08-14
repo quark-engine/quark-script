@@ -1,5 +1,5 @@
 {
-    "crime": "Load Url from Intent and open WebView",
+    "crime": "Load Url from Intent",
     "permission": [],
     "api": [
         {
