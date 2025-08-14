@@ -29,3 +29,4 @@ for ExternalStringCommand in quarkResult.behaviorOccurList:
         continue
     else:
         print(f"CWE-88 is detected in method, {caller.fullName}")
+
