@@ -35,5 +35,3 @@ for accessExternalDir in quarkResult.behaviorOccurList:
 
     if not strMatchingAPIs:
         print(f"CWE-23 is detected in method, {caller.fullName}")
-    elif strMatchingAPIs.find("..") == -1:
-        print(f"CWE-23 is detected in method, {caller.fullName}")

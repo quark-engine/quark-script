@@ -16,6 +16,7 @@ ruleInstance = Rule(RULE_PATH)
 quarkResult = runQuarkAnalysis(SAMPLE_PATH, ruleInstance)
 
 for accessExternalDir in quarkResult.behaviorOccurList:
+
     filePath = accessExternalDir.secondAPI.getArguments()[2]
 
     if quarkResult.isHardcoded(filePath):
@@ -23,9 +24,8 @@ for accessExternalDir in quarkResult.behaviorOccurList:
 
     caller = accessExternalDir.methodCaller
     strMatchingAPIs = [
-        api
-        for api in STRING_MATCHING_API
-        if quarkResult.findMethodInCaller(caller, api)
+        api for api in STRING_MATCHING_API if quarkResult.findMethodInCaller(
+            caller, api)
     ]
 
     if not strMatchingAPIs:

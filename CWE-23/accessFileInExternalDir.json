@@ -5,7 +5,7 @@
         {
             "class": "Landroid/os/Environment;",
             "method": "getExternalStorageDirectory",
-            "descriptor": "()Ljava/io/File"
+            "descriptor": "()Ljava/io/File;"
         },
         {
             "class": "Ljava/io/File;",
