@@ -1,0 +1,18 @@
+{
+    "crime": "Access a File with an unsafe path from Uri",
+    "permission": [],
+    "api": [
+        {
+            "class": "Landroid/net/Uri;",
+            "method": "getLastPathSegment",
+            "descriptor": "()Ljava/lang/String;"
+        },
+        {
+            "class": "Ljava/io/File;",
+            "method": "<init>",
+            "descriptor": "(Ljava/io/File;Ljava/lang/String;)V"
+        }
+    ],
+    "score": 1,
+    "label": []
+}
