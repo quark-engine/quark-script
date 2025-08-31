@@ -1,0 +1,18 @@
+{
+    "crime": "Use editor to store information",
+    "permission": [],
+    "api": [
+        {
+            "class": "Landroid/content/SharedPreferences$Editor;",
+            "method": "putString",
+            "descriptor": "(Ljava/lang/String;Ljava/lang/String;)Landroid/content/SharedPreferences$Editor;"
+        },
+        {
+            "class": "Landroid/content/SharedPreferences$Editor;",
+            "method": "commit",
+            "descriptor": "()Z"
+        }
+    ],
+    "score": 1,
+    "label": []
+}
